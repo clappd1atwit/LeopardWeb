@@ -36,3 +36,8 @@ each of these steps we can test and make sure our system is operational.
 Dan Comments:
 -Good explaination of how we would use the incremental process effectively
 -Could add more decriptive explaination of each iteration of the project
+
+***Good content
+I think a bullet point format would be easier to follow along with
+also to organize information better
+Liam Nasr***
