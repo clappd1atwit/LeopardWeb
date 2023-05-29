@@ -62,6 +62,11 @@ AFTER completing this step, move on to the next step
 Operation and Maintenance:
 •	Once the customer has tested our program. Implement any necessary changes and test again
 
+*** Good detail in requirements section
+maybe elaborate on GUI format more
+overall similar to mine
+Liam Nasr***
+
 
 
 
