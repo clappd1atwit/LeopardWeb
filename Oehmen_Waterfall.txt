@@ -34,6 +34,13 @@ The next step is to design the entire system before moving on to testing. This i
 Once all the design and coding is done we can move on to testing. This could include sending a prototype to the customer to test the design. 
 This method does not work great for this project as we want to be able to test our project every week as we add what we learn and our new tasks to it.
 
+For these reasons the following steps should be followed for waterwall design:
+1. Analysis the information given by the customer to create a strong system design
+2. Do all the required implementation of the code
+3. After all coding is complete start stress testing the system to try to find bugs or errors
+4. Finish development of any errors find during testing
+5. Sent the finsihed project to the customer and continue doing maintance as required
+
 Dan Comments:
 -Very good description of each class and their attributes
 -Could be more descriptive of the steps needed for complete the code instead of lumpong it all into one step
