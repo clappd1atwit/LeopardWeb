@@ -49,3 +49,7 @@ Nasr_Design_and_Implementation:
 Great layout of steps could add more about where we can infomation from
 Also can add more for a system overview
 #
+
+Dan Comments:
+- Good overview of database design
+- Very descriptive validation step
