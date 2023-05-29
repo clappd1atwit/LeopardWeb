@@ -55,7 +55,7 @@ Nasr - Waterfall Method
 #Adam Oehmen Comments
 Strong materials and system design sections
 
-Added section in testing about waterfall method
-#
-
+Dan Comments:
+- Very descirptive System design. It is very explicit on how the code architecture will be designed
+- Software Design step is very clear and descriptive
 
