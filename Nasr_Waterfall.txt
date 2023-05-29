@@ -47,11 +47,15 @@ Nasr - Waterfall Method
 		the table would contain:
 			Columns: ID, name, and user type(admin, instructor, user)
 3. Implemetation and Testing
-	- Method of testing would be to test indivdual aspects
+	- Method of testing would be to test indivdual aspects after all of the design stage is complete
 4. then integrate together and Test as a unit
 5. Operation and Maintenance
 	-Enusre everything works properly, if not then debug and fix errors.
 
+#Adam Oehmen Comments
+Strong materials and system design sections
 
+Added section in testing about waterfall method
+#
 
 
