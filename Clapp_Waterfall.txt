@@ -8,25 +8,27 @@ Waterfall Process
 Feasibility study: can it be built with current hardware and software – yes. Is it affordable – yes.
 Requirements specification:
 •	All users will have the following attributes:
-o	First Name
-o	Last Name
-o	ID
+  o	First Name
+  o	Last Name
+  o	ID
 •	Users will have the ability to set each attribute and print all info for the object
+
 There will be three derived classes:
 •	Student: Students will have the ability to do the following
-o	Search courses
-o	Add/drop courses
-o	Print schedule
+  o	Search courses
+  o	Add/drop courses
+  o	Print schedule
 •	Instructor: Instructors will have the ability to do the following
-o	Search courses
-o	Print class list
-o	Print schedule
+  o	Search courses
+  o	Print class list
+  o	Print schedule
 •	Admin: Admins will have the ability to do the following
-o	Add/remove courses to system
-o	Add/remove users
-o	Add/remove student from a class
-o	Search/print rosters
-o	Search/print courses
+  o	Add/remove courses to system
+  o	Add/remove users
+  o	Add/remove student from a class
+  o	Search/print rosters
+  o	Search/print courses
+  
 Requirements validation: These requirements were specified by the customer; therefore, we can assume that they are satisfactory.
 
 AFTER completing this step, move on to the next step
@@ -37,11 +39,12 @@ System and Software Design:
 •	Architectural Design: database, functions, classes and objects, user interface.
 
 •	Interface Design:
-
-o	Object information like users, courses, and class groups will be stored in a database. We will write code to link the database information and a graphical interface. 
-o	The GUI will allow users to view information stored in the database in a neat and organized manner.
+  o	Object information like users, courses, and class groups will be stored in a database. We will write code to link the database information and a graphical interface. 
+  o	The GUI will allow users to view information stored in the database in a neat and organized manner.
+  
 •	Component Design:
-o	Aside from a User, Student, Instructor, and Admin, we will need auxiliary/helper classes like Course, and Class.
+  o	Aside from a User, Student, Instructor, and Admin, we will need auxiliary/helper classes like Course, and Class.
+  
 •	Database design: Tables will include table of students, table of courses, table of instructors, table of admins, links from courses to users.
 
 AFTER completing this step, move on to the next step
