@@ -28,4 +28,11 @@ instructor – the instructor class will have functions that allow them to print
 admin – the admin class will have functions that allow them to add courses to the system, remove courses from the system, add/remove users, add/remove student from a course, search and print rosters and courses
 
 
-The incremental development method allows us to keep testing and resigning our project. The incremental model says that we can do our original planning and code part then test. Depending on how the tests goes we can go back and reiterate the system allowing us to then work on new designs and implementation. As we learn we can in class and find ways of coding and implementing databases we can go back and redesign our program with new concepts that can make it better. One example of incrementation is to start by having a system that is just the classes. Then add a system for the database. Then add a GUI for the user to be able to access the information. After each of these steps we can test and make sure our system is operational.
+The incremental development method allows us to keep testing and resigning our project. The incremental model says that we can do our original planning and code part then test. Depending on how the tests goes we can go back
+and reiterate the system allowing us to then work on new designs and implementation. As we learn we can in class and find ways of coding and implementing databases we can go back and redesign our program with new concepts 
+that can make it better. One example of incrementation is to start by having a system that is just the classes. Then add a system for the database. Then add a GUI for the user to be able to access the information. After 
+each of these steps we can test and make sure our system is operational.
+
+Dan Comments:
+-Good explaination of how we would use the incremental process effectively
+-Could add more decriptive explaination of each iteration of the project
