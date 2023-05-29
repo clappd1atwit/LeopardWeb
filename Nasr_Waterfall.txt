@@ -30,7 +30,7 @@ Nasr - Waterfall Method
 	Design only – component, architectural, interface, and database design
 	Architectural design 
 		-database 
-			-One table, containing all necessary info
+			-One table containing all necessary user info, and a second table for each user to display their schedule
 		-functions
 			-each class has their own functions listed in step 1
 		-classes
