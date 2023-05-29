@@ -24,3 +24,10 @@ Fourth Version:
 Fifth Version:
 •	GUI will be created.
 •	Users will now be able to access data information in a graphical interface.
+
+
+#Adam Oehmen Commenst
+Great series of steps
+Very easy to follow steps to complete design
+Maybe add more about the system overview
+#
