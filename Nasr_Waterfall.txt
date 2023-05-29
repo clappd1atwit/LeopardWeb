@@ -1,0 +1,57 @@
+Nasr - Waterfall Method
+1. Requirements Gathering: The program is feasible to build and it is possible with the given technology.
+	-The base class of the system is user:
+ 		-Attributes: first name, last name, ID
+	-The first subclass is student:
+		-Students are able to: 
+			-search courses 
+			-add/drop courses 
+			-print their schedule
+	-The Instructor subclass:
+		-Instructor classes can:
+			-print their schedule 
+			-print their classlist
+			-search for courses.
+	-The Admin subclass:
+		-Admin classes can:
+			-add courses to the system
+			-remove coursesfrom the system
+			-add/remove users 
+			-add/remove student from a course
+			-search and print rosters and courses.
+	-Database of courses: this will contain information such as:
+		-the CRN, course name, times, and instructor
+	-The system will also include:
+		-multiple semesters, print-out of schedule, scheduling preferences.
+	-Requirements validation: 
+		-check to see if the requirements are realistic
+
+2. System and software design
+	Design only – component, architectural, interface, and database design
+	Architectural design 
+		-database 
+			-One table, containing all necessary info
+		-functions
+			-each class has their own functions listed in step 1
+		-classes
+			-Student, admin, instructor
+		-user interface
+			-Login Screen, into menu with given options, different options lead to different 
+			images/secondary options
+	Interface design 
+		attempt a graphical model, simple design with button like selections
+	Component design 
+		menu layout can be reused in multiple sections
+	Database design 
+		I beileive one table is sufficent as all useres have the same basic info, 
+		the table would contain:
+			Columns: ID, name, and user type(admin, instructor, user)
+3. Implemetation and Testing
+	- Method of testing would be to test indivdual aspects
+4. then integrate together and Test as a unit
+5. Operation and Maintenance
+	-Enusre everything works properly, if not then debug and fix errors.
+
+
+
+
