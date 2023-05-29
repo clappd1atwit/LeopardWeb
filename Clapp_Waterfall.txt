@@ -67,7 +67,11 @@ maybe elaborate on GUI format more
 overall similar to mine
 Liam Nasr***
 
-
+#Adam Oehmen Comments
+Great layout and description of waterfall method
+Great layout of everything needed to complete the task
+Maybe add more about the system overview
+#
 
 
 
