@@ -28,8 +28,17 @@ instructor – the instructor class will have functions that allow them to print
 admin – the admin class will have functions that allow them to add courses to the system, remove courses from the system, add/remove users, add/remove student from a course, search and print rosters and courses’
 
 
-The integrate and design method can work well for this project because we are designing a system that already exists. We can look into the current leopard web and iterate and configure that solution to fit. We can also look
-at how other databases implement their designs. This would give us a strong baseline to start our project and after that we need to configure those user interfaces and designs to fit the language and database we wish to use.
+The integrate and design method can work well for this project because we are designing based off a system that already exists.
+We can look into the current leopard web and iterate and configure that solution to fit. 
+We can also look at how other databases implement their designs. This would give us a strong baseline to start our project and after that we need to configure those user interfaces and designs to fit the language and database we wish to use.
+
+Leopard web gives us a great start for a visual baseline but can be hard to get the back code that runs it.
+
+Other system can be found online and on github that show how SQL lite is integrated with what ever langangue works best for the project.
+
+https://github.com/xerial/sqlite-jdbc
+
+Sites like this give great tutorials we can use to then configure.
 
 Dan Comments:
 -It is a good idea to use the current leopard web for possible UI and archtecture inspiration
