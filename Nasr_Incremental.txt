@@ -37,3 +37,7 @@ Nasr Incremental Method
 Great layout and description of steps
 Could add more about the design requirements
 #
+
+Dan Comments:
+-Could be more descriptive about the code functionality at each step. Will all functions be implemented? etc.
+- Breaking up the steps into smaller steps might allow for more meaningful progress tracking
