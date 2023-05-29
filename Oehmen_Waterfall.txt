@@ -38,3 +38,8 @@ Dan Comments:
 -Very good description of each class and their attributes
 -Could be more descriptive of the steps needed for complete the code instead of lumpong it all into one step
 -Very descriptive Requirements specification
+
+***Good content
+I think that bullet point format woud provide a more descriptive and organized description of the process
+Maybe Include more detail in final description
+Liam Nasr***
