@@ -44,3 +44,8 @@ Nasr_Design_and_Implementation:
 3. Updates
 	-Upadate features to ensure requirements
 	-fix bugs
+
+#Adam Oehmen Comments
+Great layout of steps could add more about where we can infomation from
+Also can add more for a system overview
+#
