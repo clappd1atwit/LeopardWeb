@@ -34,3 +34,8 @@ at how other databases implement their designs. This would give us a strong base
 Dan Comments:
 -It is a good idea to use the current leopard web for possible UI and archtecture inspiration
 -could add other examples of code that we could build off of
+
+***Good idea for inspiration by using current leopard web
+Organziation could use some streamlining
+Good content
+Liam Nasr***
