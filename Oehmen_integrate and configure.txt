@@ -1,0 +1,31 @@
+﻿Adam Oehmen
+Applied Programming Concepts
+Task 2
+Integrate and configure
+Due: 5/28/23
+
+
+Software Specification
+Feasibility study: can a scheduling system be built with current software – yes, it's already been done. Is it affordable – yes.
+Requirements elicitation and analysis: Interview teachers, administrators and students for what is needed and what is a plus for the system.
+        
+Requirements specification:
+Database of users: the system should work for 100 students, 10 instructors, and 1 admin, however, we will test with fewer. 
+Database of courses: this will contain information such as the CRN, course name, times, and instructor. 
+Three types of users:
+         Students – can register, can see available courses and their own schedule.
+Instructors – can see available courses and their own course roster. 
+Admins – can see everything, can edit courses/users/schedules. 
+The system should include multiple semesters, print-out of schedule, scheduling preferences.
+The system as a whole and all components must be tested thoroughly
+The base class of the system is user with: 
+Attributes: first name, last name, ID. 
+Methods: set function for each attribute, and a function to print all info for the object. 
+There will be three derived classes: 
+All derived classes must contain any additional attributes and appropriate set/get functions. 
+student – the student class will have functions that allow them to search courses, add/drop courses, print their schedule. 
+instructor – the instructor class will have functions that allow them to print their schedule, print their class list, and search for courses. 
+admin – the admin class will have functions that allow them to add courses to the system, remove courses from the system, add/remove users, add/remove student from a course, search and print rosters and courses’
+
+
+The integrate and design method can work well for this project because we are designing a system that already exists. We can look into the current leopard web and iterate and configure that solution to fit. We can also look at how other databases implement their designs. This would give us a strong baseline to start our project and after that we need to configure those user interfaces and designs to fit the language and database we wish to use.
