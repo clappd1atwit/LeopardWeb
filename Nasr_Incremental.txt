@@ -33,4 +33,7 @@ Nasr Incremental Method
 	
 4. Implement and test interactions between version steps.
 
-	
+#Adam Oehmen Comments
+Great layout and description of steps
+Could add more about the design requirements
+#
