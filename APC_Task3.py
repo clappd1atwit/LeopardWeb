@@ -1,4 +1,8 @@
-CREATE TABLE if not exists Student(
+import sqlite3
+
+database = sqlite3.connect("Task3_Database.db") 
+
+sql_student = CREATE TABLE if not exists Student(
     ID int, 
     first name text,
     last name text,
@@ -7,7 +11,7 @@ CREATE TABLE if not exists Student(
     email text
 );
 
-CREATE TABLE if not exists Instructor(
+sql_intructor = CREATE TABLE if not exists Instructor(
     ID int, 
     first name text,
     last name text,
@@ -17,7 +21,7 @@ CREATE TABLE if not exists Instructor(
     email text
 );
 
-CREATE TABLE if not exists Admin(
+sql_ admin = CREATE TABLE if not exists Admin(
     ID int, 
     first name text,
     last name text,
@@ -26,7 +30,7 @@ CREATE TABLE if not exists Admin(
     email text
 );
 
-CREATE TABLE if not exists Course(
+sql_course = CREATE TABLE if not exists Course(
     CRN int, 
     Title text,
     department text,
