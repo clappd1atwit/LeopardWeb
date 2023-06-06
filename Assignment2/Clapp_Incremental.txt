@@ -1,0 +1,38 @@
+Daniel Clapp
+ELEC3225
+HW2 Process Models
+
+Incremental Process:
+
+First Version:
+•	User, Student, Instructor, and Admin Classes will be created. 
+•	All object variables will be viewable and modifiable.
+•	Some functions will not yet be implemented.
+
+Second Version:
+•	All functions will be implemented for the above-mentioned classes.
+•	Code will not yet connect to the database; In-code test examples will be created to test functionality.
+
+Third Version:
+•	Database design and functionality will be implemented.
+•	All tables and queries will be functional.
+
+Fourth Version:
+•	Database and Code will now talk to each other. 
+•	Users will be able to access database information.
+
+Fifth Version:
+•	GUI will be created.
+•	Users will now be able to access data information in a graphical interface.
+
+
+#Adam Oehmen Commenst
+Great series of steps
+Very easy to follow steps to complete design
+Maybe add more about the system overview
+#
+
+***Great steps progression
+2nd and 3rd setps could possibly be combined
+good distribution of tasks to each version
+Liam Nasr***

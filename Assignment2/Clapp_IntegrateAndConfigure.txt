@@ -1,0 +1,21 @@
+https://gist.github.com/syzdek/956669/15ad5f0ae23591e67467f0b0aeb085b57a448f13
+
+We could use the above database sample as a starting point for our database.
+The example database is a library book log. This database also has users that have
+similar attributes like name and Library ID. This code sould be used during the database 
+design step of the process
+
+https://github.com/bpdesilva/Student-Registration-System/blob/master/Start.cpp
+
+The following course registration C++ projecet could be used as a baseline for
+our project. Although this may not be how we want to code our project, many aspects 
+of the code could be used in our projects like the UI design ideas. This would be used during the implementation of our code.
+
+#Adam Oehmen Comments
+Great work finding online peices we can use
+Can add more to make the model feel more like a diagram
+#
+
+***
+I feel like the document could have been more bullet point oriented, creating a more formatted discription
+good content, great job on the online sources.

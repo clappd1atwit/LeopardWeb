@@ -1,0 +1,55 @@
+Nasr_Design_and_Implementation:
+1. Archetecture:
+	Architectural design 
+		-database 
+			-Two tables, containing all necessary info
+		-functions
+			-each class has their own functions listed in step 1
+		-classes
+			-Student, admin, instructor
+		-user interface
+			-Login Screen, into menu with given options, different options lead to different 
+			images/secondary options
+	Interface design 
+		attempt a graphical model, simple design with button like selections
+	Component design 
+		- menu layout can be reused in multiple sections
+		-Subclasses:
+		-Students are able to: 
+			-search courses 
+			-add/drop courses 
+			-print their schedule
+		-The Instructor subclass:
+			-Instructor classes can:
+			-print their schedule 
+			-print their classlist
+			-search for courses.
+		-The Admin subclass:
+			-Admin classes can:
+			-add courses to the system
+			-remove coursesfrom the system
+			-add/remove users 
+			-add/remove student from a course
+			-search and print rosters and courses.
+	Database design 
+		I beileive two tables are sufficent as all users have the same basic info, 
+		the 1st table would contain:
+			Columns: ID, name, and user type(admin, instructor, user)
+		the 2nd table would be user specific, storing/displaying their current schedule
+2. Validation
+	-Test Each component indiviually
+	-Intergrate components together 
+	-test the collective components
+	-apply real world data to ensure functionality
+3. Updates
+	-Upadate features to ensure requirements
+	-fix bugs
+
+#Adam Oehmen Comments
+Great layout of steps could add more about where we can infomation from
+Also can add more for a system overview
+#
+
+Dan Comments:
+- Good overview of database design
+- Very descriptive validation step

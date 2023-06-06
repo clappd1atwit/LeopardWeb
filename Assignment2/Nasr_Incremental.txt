@@ -1,0 +1,43 @@
+Nasr Incremental Method
+
+1. 1st verison will include:
+	The base class of the system (user):
+ 		-Attributes: first name, last name, ID
+	-The first subclass is student:
+		-Students are able to: 
+			-search courses 
+			-add/drop courses 
+			-print their schedule
+	-The Instructor subclass:
+		-Instructor classes can:
+			-print their schedule 
+			-print their classlist
+			-search for courses.
+	-The Admin subclass:
+		-Admin classes can:
+			-add courses to the system
+			-remove coursesfrom the system
+			-add/remove users 
+			-add/remove student from a course
+			-search and print rosters and courses.
+	-Database of courses: this will contain information such as:
+		-the CRN, course name, times, and instructor
+
+
+2. 2nd version will Include	
+	-multiple semesters, print-out of schedule, scheduling preferences.
+	-The user will be able to search classes and execute their specific abilities in Ver. 1
+	-Saved tables for each individual user to store their schedules.
+3. 3rd Version (Final)
+	Will include GUI to implement login and seperate user functions.
+	
+4. Implement and test interactions between version steps.
+
+#Adam Oehmen Comments
+Great layout and description of steps
+Could add more about the design requirements
+#
+
+Dan Comments:
+-Could be more descriptive about the code functionality at each step. Will all functions be implemented? etc.
+- Breaking up the steps into smaller steps might allow for more meaningful progress tracking
