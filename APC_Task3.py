@@ -21,7 +21,7 @@ sql_intructor = """CREATE TABLE if not exists Instructor(
     email text
 );"""
 
-sql_ admin = """CREATE TABLE if not exists Admin(
+sql_admin = """CREATE TABLE if not exists Admin(
     ID int, 
     first name text,
     last name text,
