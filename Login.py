@@ -1,100 +1,66 @@
-import tkinter as tk
-from tkinter import messagebox
+from math import log
+from re import M
+from tkinter import *
+import tkinter
+from turtle import width
+import sqlite3
+#pip install pillow
+from PIL import ImageTk, Image  
+from tkinter import messagebox                                                                                                                                                                                
 
-class MainApplication(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        self.title("Login System")
-        self.geometry("300x200")
-        
-        self.login_frame = LoginFrame(self)
-        self.home_frame = HomeFrame(self)
-        self.profile_frame = ProfileFrame(self)
-        
-        self.show_login_frame()
-        
-    def show_login_frame(self):
-        self.login_frame.pack()
-        self.home_frame.pack_forget()
-        self.profile_frame.pack_forget()
-        
-    def show_home_frame(self):
-        self.login_frame.pack_forget()
-        self.home_frame.pack()
-        self.profile_frame.pack_forget()
-        
-    def show_profile_frame(self):
-        self.login_frame.pack_forget()
-        self.home_frame.pack_forget()
-        self.profile_frame.pack()
-        
+loginPage = tkinter.Tk()
 
-class LoginFrame(tk.Frame):
-    def __init__(self, master):
-        super().__init__(master)
-        
-        self.label = tk.Label(self, text="Login Page")
-        self.label.pack(pady=10)
-        
-        self.username_label = tk.Label(self, text="Username:")
-        self.username_label.pack()
-        self.username_entry = tk.Entry(self)
-        self.username_entry.pack()
-        
-        self.password_label = tk.Label(self, text="Password:")
-        self.password_label.pack()
-        self.password_entry = tk.Entry(self, show="*")
-        self.password_entry.pack()
-        
-        self.login_button = tk.Button(self, text="Login", command=self.login)
-        self.login_button.pack(pady=10)
-        
-    def login(self):
-        username = self.username_entry.get() 
-        password = self.password_entry.get()
-        
-        # Perform login validation here (e.g., check against a database)
-        # For simplicity, we'll use a dummy check
-        if username == "admin" and password == "password":
-            self.master.show_home_frame()
-        else:
-            messagebox.showerror("Login Failed", "Invalid username or password.")
+#title of the page
+loginPage.title('Login')
+#icon picture
+loginPage.iconphoto(False,PhotoImage(file = 'Images_for_Gui/images.png'))
+#setting page geometry to the size of the user's screen
+width_screen= loginPage.winfo_screenwidth()
+height_screen= loginPage.winfo_screenheight()
+loginPage.geometry("%dx%d" % (width_screen, height_screen))
+# Define image
+bg = ImageTk.PhotoImage(file="Images_for_Gui\wit-background.png")
 
+#Create canvas
+my_canvas = Canvas(loginPage, width = width_screen, height = height_screen)
+my_canvas.pack(fill="both", expand=True)
 
-class HomeFrame(tk.Frame):
-    def __init__(self, master):
-        super().__init__(master)
-        
-        self.label = tk.Label(self, text="Home Page")
-        self.label.pack(pady=10)
-        
-        self.profile_button = tk.Button(self, text="View Profile", command=self.view_profile)
-        self.profile_button.pack(pady=5)
-        
-        self.logout_button = tk.Button(self, text="Logout", command=self.logout)
-        self.logout_button.pack(pady=5)
-        
-    def view_profile(self):
-        self.master.show_profile_frame()
-        
-    def logout(self):
-        self.master.show_login_frame()
+#set image in canvas
+my_canvas.create_image(0,0,image=bg, anchor="nw")
 
+def resizer(e):
+    global bg1, resized_bg, new_bg
+    # Open Image
+    bg1= Image.open("wit-background.png")
+    #resize Image
+    resized_bg = bg1.resized((e.width, e.height), Image.ANTIALIAS)
+    #define the image
+    new_bg = ImageTk.PhotoImage(resized_bg)
+    #add it back to canvas
+    my_canvas.create_image(0,0, image=new_bg, anchor='nw')
+#create a label
+my_label = Label(loginPage, image=bg, bg='black').place(x=0, y=0, relwidth=1, relheight=1)
+loginPage.bind('<Return>', resizer)
 
-class ProfileFrame(tk.Frame):
-    def __init__(self, master):
-        super().__init__(master)
-        
-        self.label = tk.Label(self, text="Profile Page")
-        self.label.pack(pady=10)
-        
-        self.back_button = tk.Button(self, text="Back", command=self.go_back)
-        self.back_button.pack(pady=5)
-        
-    def go_back(self):
-        self.master.show_home_frame()
+#creating the frame for the login steps
 
+frame = Frame(loginPage,width = 350, height = 500,bg="white")
+frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))  
 
-if __name__ == "__main__":
-    app = MainApplication()
-    app.mainloop()
+#Adding widgets to the frame
+
+Login_label = Label(frame, text = "Enter Username & Password", font=('Times',14),bg="white")
+username_label = Label(frame, text = "Username:", font=('Times',12),bg="white")
+username_entry = Entry(frame, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14))
+password_Label = Label(frame, text = "Password", font=('Times',12),bg="white")
+password_entry = Entry(frame, show=".", highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14))
+login_button = Button(frame, text="Login", bg="red", fg="white", width=17, font=('Times',24), bd=0)
+Login_label.place(x=20,y=40)
+username_label.place(x=20,y=80)
+username_entry.place(x=20,y=110)
+password_Label.place(x=20,y=140)
+password_entry.place(x=20,y=170)
+login_button.place(x=20,y=210)
+
+loginPage.mainloop()
+
