@@ -108,6 +108,7 @@ cur.execute("INSERT INTO Course VALUES(33957, 'Computer Network', 'BSCO', '11:00
 def login():
     successful_login = 0
     while(successful_login == 0):
+
         email = input('Email: ')
         cur.execute("""SELECT COUNT(*) FROM STUDENT WHERE EMAIL = '%s'""" % email)
         query_result = cur.fetchone()
@@ -118,6 +119,9 @@ def login():
             cur.execute("""SELECT COUNT(*) FROM INSTRUCTOR WHERE EMAIL = '%s'""" % email)
             query_result = cur.fetchone()
             if(query_result[0] == 1):
+                cur.execute("""SELECT SURNAME FROM INSTRUCTOR WHERE EMAIL = '%s'""" % email)
+                query_result = cur.fetchone()
+                usersName = query_result
                 return 'Instructor'
                 successful_login = 1
             else:
