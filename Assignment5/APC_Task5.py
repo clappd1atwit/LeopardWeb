@@ -4,8 +4,25 @@ import sqlite3
 database = sqlite3.connect("assignment3.db") 
 
 cur = database.cursor()
+cur.execute("""CREATE TABLE if not exists Course(
+    CRN int, 
+    Title text,
+    department text,
+    time text,
+    days of the week text,
+    semester text,
+    year int,
+    credit int,
+    professor text
+);""")#Created Course table if not already made
 
+#Needs to be run first time to setup db
 #cur.execute("""ALTER TABLE STUDENT ADD COLUMN courseCRN""")
+#cur.execute("INSERT INTO Course VALUES(34285, 'Advanced Digital', 'BSCO', '12:30', 'MF', 'Summer', 2023, 4, 'Pilin');")
+#cur.execute("INSERT INTO Course VALUES(33950, 'Applied Programming', 'BSCO', '8:00', 'MTR', 'Summer', 2023, 3, 'Rawlins');")
+#cur.execute("INSERT INTO Course VALUES(12865, 'Econ', 'HUSS', '8:00', 'MTR', 'Summer', 2023, 4, 'Cort');")
+#cur.execute("INSERT INTO Course VALUES(03648, 'Materials', 'BSME', '8:00', 'MTR', 'Summer', 2023, 3, 'Bernoulli');")
+#cur.execute("INSERT INTO Course VALUES(33957, 'Computer Network', 'BSCO', '11:00', 'MF', 'Summer', 2023, 4, 'Hasebbo');")
 
 def SearchCourse():
     searchMethod = 0
@@ -69,38 +86,6 @@ def printOptions(userNum):
     return UserInput
 
 
-cur.execute("""CREATE TABLE if not exists Course(
-    CRN int, 
-    Title text,
-    department text,
-    time text,
-    days of the week text,
-    semester text,
-    year int,
-    credit int,
-    professor text
-);""")
-
-cur.execute("INSERT INTO Course VALUES(34285, 'Advanced Digital', 'BSCO', '12:30', 'MF', 'Summer', 2023, 4, 'Pilin');")
-cur.execute("INSERT INTO Course VALUES(33950, 'Applied Programming', 'BSCO', '8:00', 'MTR', 'Summer', 2023, 3, 'Rawlins');")
-cur.execute("INSERT INTO Course VALUES(12865, 'Econ', 'HUSS', '8:00', 'MTR', 'Summer', 2023, 4, 'Cort');")
-cur.execute("INSERT INTO Course VALUES(03648, 'Materials', 'BSME', '8:00', 'MTR', 'Summer', 2023, 3, 'Bernoulli');")
-cur.execute("INSERT INTO Course VALUES(33957, 'Computer Network', 'BSCO', '11:00', 'MF', 'Summer', 2023, 4, 'Hasebbo');")
-
-#cur.execute("""CREATE TABLE if not exists Instructor(
-#    ID int
-#    Password text
-#);""")
-
-#cur.execute("""CREATE TABLE if not exists Student(
-#    ID int
-#    Password text
-#);""")
-
-#cur.execute("""CREATE TABLE if not exists Admin(
-#    ID int
-#    Password text
-#);""")
 #Function for Log in
 def login():
     successful_login = 0
@@ -136,11 +121,7 @@ User = login()
 run = True
 while run == True:
 
-
-
-
-   
-    usersName = '' #This needs to be filled in by the log in database
+    usersName = '' 
 
     if User == 'Admin':
         actions = printOptions(1)
