@@ -24,7 +24,7 @@ cur.execute("""CREATE TABLE if not exists Course(
 #cur.execute("INSERT INTO Course VALUES(03648, 'Materials', 'BSME', '8:00', 'MTR', 'Summer', 2023, 3, 'Bernoulli');")
 #cur.execute("INSERT INTO Course VALUES(33957, 'Computer Network', 'BSCO', '11:00', 'MF', 'Summer', 2023, 4, 'Hasebbo');")
 
-def SearchCourse():
+def SearchCourse():  #Function for 
     searchMethod = 0
     print('Course Search:')
     print('1: CRN')
