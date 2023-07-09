@@ -5,7 +5,7 @@ database = sqlite3.connect("assignment3.db")
 
 cur = database.cursor()
 
-cur.execute("""ALTER TABLE STUDENT ADD COLUMN courseCRN""")
+#cur.execute("""ALTER TABLE STUDENT ADD COLUMN courseCRN""")
 
 def SearchCourse():
     searchMethod = 0
@@ -104,10 +104,10 @@ cur.execute("INSERT INTO Course VALUES(33957, 'Computer Network', 'BSCO', '11:00
 run = True
 while run == True:
 
-    #Function for Log in
+#Function for Log in
 
-    User = 'Student' #User set to what ever from log in. Unquire for each type of user
-    usersName = '' #This needs to be filled in by the log in database
+User = 'Student' #User set to what ever from log in. Unquire for each type of user
+usersName = '' #This needs to be filled in by the log in database
 
     if User == 'Admin':
         actions = printOptions(1)
