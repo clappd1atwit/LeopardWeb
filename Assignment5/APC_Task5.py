@@ -101,59 +101,66 @@ cur.execute("INSERT INTO Course VALUES(33957, 'Computer Network', 'BSCO', '11:00
 #    ID int
 #    Password text
 #);""")
+run = True
+while run == True:
 
+    #Function for Log in
 
+    User = 'Student' #User set to what ever from log in. Unquire for each type of user
+    usersName = '' #This needs to be filled in by the log in database
 
-#Function for Log in
+    if User == 'Admin':
+        actions = printOptions(1)
+        if actions == '3':
+            intCRN = int(input('Course CRN: '))
+            sName = input('Course Name: ')
+            sDept = input('Course Department: ')
+            sTime = input('Course Time: ')
+            sDays = input('Days of the week: ')
+            sSemester = input('Semester Offered: ')
+            intYear = int(input('Year Course is offered: '))
+            intCredit = int(input('Number of credits for course: '))
+            sProf = input('Who is teaching the class: ')
+            cur.execute("""INSERT INTO Course VALUES('%d','%s', '%s','%s', '%s', '%s', '%d', '%d', '%s')""" % (intCRN, sName, sDept, sTime, sDays, sSemester, intYear, intCredit, sProf))
+        elif actions == '4':
+            rCRN = int(input('What is the CRN of the course you want to remove: '))
+            cur.execute("""DELETE FROM Course WHERE CRN = '%d'""" % rCRN)
+        elif actions == '5':
+            run = False
+        print('Admin functions') #Can be removed
 
-User = 'Student' #User set to what ever from log in. Unquire for each type of user
-usersName = '' #This needs to be filled in by the log in database
-
-if User == 'Admin':
-    actions = printOptions(1)
-    if actions == '3':
-        intCRN = int(input('Course CRN: '))
-        sName = input('Course Name: ')
-        sDept = input('Course Department: ')
-        sTime = input('Course Time: ')
-        sDays = input('Days of the week: ')
-        sSemester = input('Semester Offered: ')
-        intYear = int(input('Year Course is offered: '))
-        intCredit = int(input('Number of credits for course: '))
-        sProf = input('Who is teaching the class: ')
-        cur.execute("""INSERT INTO Course VALUES('%d','%s', '%s','%s', '%s', '%s', '%d', '%d', '%s')""" % (intCRN, sName, sDept, sTime, sDays, sSemester, intYear, intCredit, sProf))
-    elif actions == '4':
-        rCRN = int(input('What is the CRN of the course you want to remove: '))
-        cur.execute("""DELETE FROM Course WHERE CRN = '%d'""" % rCRN)
-    print('Admin functions') #Can be removed
-
-elif User == 'Instructor':
-    actions = printOptions(2)
-    if actions == '3':
-        cur.execute("""SELECT CRN FROM Course WHERE professor = '%s'""" % usersName)
-        query_CRN = cur.fetchall()
-        cur.execute("""SELECT NAME, SURNAME FROM STUDENT WHERE courseCRN = '%s'""" % query_CRN)
-        query_result = cur.fetchall()
-        for i in query_result:
-	        print(i) #Needs testing
-    print('instructor functions') #Can be removed
-
-elif User == 'Student':
-    actions = printOptions(3)
-    if actions == '3':
-        aCRN = int(input('What is the CRN of the course you like to add: '))
-        cur.execute("""UPDATE STUDENT SET courseCRN = '%d'""" % aCRN)
-    elif actions == '4':
-        rCRN = int(input('What is the CRN of the course you want to Drop: '))
-        cur.execute("""DELETE FROM STUDENT WHERE courseCRN = '%d'""" % rCRN)
-    print('Student Functions') #Can be removed
-
-else:
-    print('Error: Not a user')
-
-
-
+    elif User == 'Instructor':
+        actions = printOptions(2)
+        if actions == '3':
+            cur.execute("""SELECT CRN FROM Course WHERE professor = '%s'""" % usersName)
+            query_CRN = cur.fetchall()
+            cur.execute("""SELECT NAME, SURNAME FROM STUDENT WHERE courseCRN = '%s'""" % query_CRN)
+            query_result = cur.fetchall()
+            for i in query_result:
+                print(i) #Needs testing
+        elif actions == '5':
+            run = False
     
+
+    elif User == 'Student':
+        actions = printOptions(3)
+        if actions == '3':
+            aCRN = int(input('What is the CRN of the course you like to add: '))
+            cur.execute("""UPDATE STUDENT SET courseCRN = '%d'""" % aCRN)
+        elif actions == '4':
+            rCRN = int(input('What is the CRN of the course you want to Drop: '))
+            cur.execute("""DELETE FROM STUDENT WHERE courseCRN = '%d'""" % rCRN)
+        elif actions == '5':
+            run = False
+        print('Student Functions') #Can be removed
+
+
+    else:
+        print('Error: Not a user')
+
+
+
+        
 database.commit()
 
 database.close()
