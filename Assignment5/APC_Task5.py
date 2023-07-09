@@ -24,7 +24,7 @@ cur.execute("""CREATE TABLE if not exists Course(
 #cur.execute("INSERT INTO Course VALUES(03648, 'Materials', 'BSME', '8:00', 'MTR', 'Summer', 2023, 3, 'Bernoulli');")
 #cur.execute("INSERT INTO Course VALUES(33957, 'Computer Network', 'BSCO', '11:00', 'MF', 'Summer', 2023, 4, 'Hasebbo');")
 
-def SearchCourse():  #Function for searching a course given a parameter 
+def SearchCourse():  #Function for searching a course given a parameter (Adam)
     searchMethod = 0
     print('Course Search:')
     print('1: CRN')
@@ -86,7 +86,7 @@ def printOptions(userNum): #Menu for selecting what you want to do
     return UserInput
 
 
-#Function for Log in
+#Function for Log in (Liam/Dan)
 def login():
     successful_login = 0
     while(successful_login == 0):
@@ -119,11 +119,11 @@ def login():
 User = login()
 
 run = True
-while run == True: #Run as long as you are signed in
+while run == True: #Run as long as you are signed in (Liam)
 
     usersName = '' 
 
-    if User == 'Admin': #Admin commands and functions
+    if User == 'Admin': #Admin commands and functions (Adam)
         actions = printOptions(1)
         if actions == '3':
             intCRN = int(input('Course CRN: '))
@@ -142,7 +142,7 @@ while run == True: #Run as long as you are signed in
         elif actions == '5':
             run = False
 
-    elif User == 'Instructor': #Instructor commands and functions
+    elif User == 'Instructor': #Instructor commands and functions (Adam)
         actions = printOptions(2)
         if actions == '3':
             cur.execute("""SELECT CRN FROM Course WHERE professor = '%s'""" % usersName)
@@ -155,7 +155,7 @@ while run == True: #Run as long as you are signed in
             run = False
     
 
-    elif User == 'Student': #Student commands and functions
+    elif User == 'Student': #Student commands and functions(Adam)
         actions = printOptions(3)
         if actions == '3':
             aCRN = int(input('What is the CRN of the course you like to add: '))
