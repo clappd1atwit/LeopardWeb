@@ -105,7 +105,7 @@ cur.execute("INSERT INTO Course VALUES(33957, 'Computer Network', 'BSCO', '11:00
 def login():
     successful_login = 0
     while(successful_login == 0):
-
+        print('Log in')
         email = input('Email: ')
         cur.execute("""SELECT COUNT(*) FROM STUDENT WHERE EMAIL = '%s'""" % email)
         query_result = cur.fetchone()
@@ -160,7 +160,6 @@ while run == True:
             cur.execute("""DELETE FROM Course WHERE CRN = '%d'""" % rCRN)
         elif actions == '5':
             run = False
-        print('Admin functions') #Can be removed
 
     elif User == 'Instructor':
         actions = printOptions(2)
@@ -170,7 +169,7 @@ while run == True:
             cur.execute("""SELECT NAME, SURNAME FROM STUDENT WHERE courseCRN = '%s'""" % query_CRN)
             query_result = cur.fetchall()
             for i in query_result:
-                print(i) #Needs testing
+                print(i) 
         elif actions == '5':
             run = False
     
@@ -185,7 +184,6 @@ while run == True:
             cur.execute("""DELETE FROM STUDENT WHERE courseCRN = '%d'""" % rCRN)
         elif actions == '5':
             run = False
-        print('Student Functions') #Can be removed
 
 
     else:
