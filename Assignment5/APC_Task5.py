@@ -106,8 +106,8 @@ while run == True:
 
 #Function for Log in
 
-User = 'Student' #User set to what ever from log in. Unquire for each type of user
-usersName = '' #This needs to be filled in by the log in database
+    User = 'Student' #User set to what ever from log in. Unquire for each type of user
+    usersName = '' #This needs to be filled in by the log in database
 
     if User == 'Admin':
         actions = printOptions(1)
