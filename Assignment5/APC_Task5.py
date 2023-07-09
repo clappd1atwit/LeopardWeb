@@ -5,7 +5,7 @@ database = sqlite3.connect("assignment3.db")
 
 cur = database.cursor()
 
-cur.execute("""ALTER TABLE STUDENT ADD COLUMN courseCRN""")
+#cur.execute("""ALTER TABLE STUDENT ADD COLUMN courseCRN""")
 
 def SearchCourse():
     searchMethod = 0
@@ -105,8 +105,33 @@ cur.execute("INSERT INTO Course VALUES(33957, 'Computer Network', 'BSCO', '11:00
 
 
 #Function for Log in
+def login():
+    successful_login = 0
+    while(successful_login == 0):
+        email = input('Email: ')
+        cur.execute("""SELECT COUNT(*) FROM STUDENT WHERE EMAIL = '%s'""" % email)
+        query_result = cur.fetchone()
+        if(query_result[0] == 1):
+            return 'Student'
+            successful_login = 1
+        else:
+            cur.execute("""SELECT COUNT(*) FROM INSTRUCTOR WHERE EMAIL = '%s'""" % email)
+            query_result = cur.fetchone()
+            if(query_result[0] == 1):
+                return 'Instructor'
+                successful_login = 1
+            else:
+                cur.execute("""SELECT COUNT(*) FROM ADMIN WHERE EMAIL = '%s'""" % email)
+                query_result = cur.fetchone()
+                if(query_result[0] == 1):
+                    return 'Admin'
+                    successful_login = 1
+                else:
+                    print("invalid email ... try again")
+    
+User = 'Student' #User set to what ever from log in. Unqui re for each type of user
+User = login()
 
-User = 'Student' #User set to what ever from log in. Unquire for each type of user
 usersName = '' #This needs to be filled in by the log in database
 
 if User == 'Admin':
