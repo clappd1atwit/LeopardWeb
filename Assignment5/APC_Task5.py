@@ -151,7 +151,7 @@ while run == True: #Run as long as you are signed in
             query_result = cur.fetchall()
             for i in query_result:
                 print(i) 
-        elif actions == '5':
+        elif actions == '4':
             run = False
     
 
