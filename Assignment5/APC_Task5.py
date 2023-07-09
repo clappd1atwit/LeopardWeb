@@ -126,7 +126,7 @@ def login():
                 else:
                     print("invalid email ... try again")
     
-User = 'Student' #User set to what ever from log in. Unqui re for each type of user
+
 User = login()
 
 run = True
@@ -135,7 +135,7 @@ while run == True:
 
 
 
-    User = 'Student' #User set to what ever from log in. Unquire for each type of user
+   
     usersName = '' #This needs to be filled in by the log in database
 
     if User == 'Admin':
