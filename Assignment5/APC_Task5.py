@@ -24,7 +24,7 @@ cur.execute("""CREATE TABLE if not exists Course(
 #cur.execute("INSERT INTO Course VALUES(03648, 'Materials', 'BSME', '8:00', 'MTR', 'Summer', 2023, 3, 'Bernoulli');")
 #cur.execute("INSERT INTO Course VALUES(33957, 'Computer Network', 'BSCO', '11:00', 'MF', 'Summer', 2023, 4, 'Hasebbo');")
 
-def SearchCourse():  #Function for 
+def SearchCourse():  #Function for searching a course given a parameter 
     searchMethod = 0
     print('Course Search:')
     print('1: CRN')
@@ -33,20 +33,20 @@ def SearchCourse():  #Function for
     print('4: Days')
     searchMethod = input('How would you like to search? ')
     if searchMethod == '1':
-        crn = input('What is the course CRN value: ')
-        cur.execute("""SELECT * FROM Course WHERE CRN = '%d'""") % crn
+        crn = int(input('What is the course CRN value: '))
+        cur.execute("""SELECT * FROM Course WHERE CRN = '%d'""" % crn) 
         query_result = cur.fetchall()
         for i in query_result:
 	        print(i)
     elif searchMethod == '2':
         dept = input('What department do you want to search in: ')
-        cur.execute("""SELECT * FROM Course WHERE department = '%s'""") % dept
+        cur.execute("""SELECT * FROM Course WHERE department = '%s'""" % dept) 
         query_result = cur.fetchall()
         for i in query_result:
 	        print(i)
     elif searchMethod == '3':
         ctm = input('What time do you want the class at: ')
-        cur.execute("""SELECT * FROM Course WHERE time = '%s'""")  % ctm
+        cur.execute("""SELECT * FROM Course WHERE time = '%s'""" % ctm)  
         query_result = cur.fetchall()
         for i in query_result:
 	        print(i)
@@ -60,7 +60,7 @@ def SearchCourse():  #Function for
 
 
 
-def printOptions(userNum):
+def printOptions(userNum): #Menu for selecting what you want to do
     UserInput = 0
     print("1: List Courses")
     print("2: Search Course Using Parameters")
@@ -119,11 +119,11 @@ def login():
 User = login()
 
 run = True
-while run == True:
+while run == True: #Run as long as you are signed in
 
     usersName = '' 
 
-    if User == 'Admin':
+    if User == 'Admin': #Admin commands and functions
         actions = printOptions(1)
         if actions == '3':
             intCRN = int(input('Course CRN: '))
@@ -142,7 +142,7 @@ while run == True:
         elif actions == '5':
             run = False
 
-    elif User == 'Instructor':
+    elif User == 'Instructor': #Instructor commands and functions
         actions = printOptions(2)
         if actions == '3':
             cur.execute("""SELECT CRN FROM Course WHERE professor = '%s'""" % usersName)
@@ -155,7 +155,7 @@ while run == True:
             run = False
     
 
-    elif User == 'Student':
+    elif User == 'Student': #Student commands and functions
         actions = printOptions(3)
         if actions == '3':
             aCRN = int(input('What is the CRN of the course you like to add: '))
@@ -167,12 +167,11 @@ while run == True:
             run = False
 
 
-    else:
+    else: #Error message
         print('Error: Not a user')
 
 
-
         
-database.commit()
-
+database.commit() #Close and exit db
+  
 database.close()
