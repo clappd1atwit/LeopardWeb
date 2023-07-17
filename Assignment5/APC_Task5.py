@@ -244,6 +244,7 @@ run = True
 while run == True: #Run as long as you are signed in (Liam)
 
     usersName = '' 
+    run = False
 
     #if User == 'Admin': #Admin commands and functions (Adam)
     #    actions = printOptions(1)
