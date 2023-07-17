@@ -39,6 +39,13 @@ class User:
     def getName(self):
         return self.Firstname, self.Lastname, self.ID
     # similar to toString
+    def printAllCourses():
+        cur.execute("""SELECT * FROM Course""")
+        query_result = cur.fetchall()
+        for i in query_result:
+	        print(i)
+    def findcourse():
+        SearchCourse()
     def description(self):
         return 0
 
@@ -48,15 +55,13 @@ class Student (User):
     def __init__(self, Firstname, Lastname, ID, courses):
         User.__init__(self, Firstname, Lastname, ID, courses) # call base constructor
         self.courses = courses
-    def printAllCourses():
-        PrintCourseList()
-    def findcourse():
-        SearchCourse()
     def setcourse(self, courses): #add classes to database
-        StudentCourseAdd()
+        aCRN = int(input('What is the CRN of the course you like to add: '))
+        cur.execute("""UPDATE STUDENT SET courseCRN = '%d'""" % aCRN)
         #self.courses = courses 
     def removecourse(self, courses): #remove courses
-        StudentCourseRemove()
+        rCRN = int(input('What is the CRN of the course you want to Drop: '))
+        cur.execute("""DELETE FROM STUDENT WHERE courseCRN = '%d'""" % rCRN)
         #self.courses = courses
     def getschedule():
         StudentGetSchedule()
@@ -68,7 +73,9 @@ class instructor (User):
     def __init__(self, Firstname, Lastname, ID, courses):
         User.__init__(self, courses) # call base constructor
         self.courses = courses
-    def findcourse(self):
+    def printAllCourses():
+        PrintCourseList()
+    def findcourse():
         SearchCourse()
     def getcourselist(self):
         print(self, "'s Course list")
@@ -243,24 +250,11 @@ while run == True: #Run as long as you are signed in (Liam)
     else: #Error message
         print('Error: Not a user')
 
-        
-
-def StudentCourseAdd():
-     aCRN = int(input('What is the CRN of the course you like to add: '))
-     cur.execute("""UPDATE STUDENT SET courseCRN = '%d'""" % aCRN)
-
-def StudentCourseRemove():
-    rCRN = int(input('What is the CRN of the course you want to Drop: '))
-    cur.execute("""DELETE FROM STUDENT WHERE courseCRN = '%d'""" % rCRN)
 
 def StudentGetSchedule():
     print('Where did this code go????????')
 
-def PrintCourseList():
-    cur.execute("""SELECT * FROM Course""")
-    query_result = cur.fetchall()
-    for i in query_result:
-	    print(i)
+
         
 database.commit() #Close and exit db
   
