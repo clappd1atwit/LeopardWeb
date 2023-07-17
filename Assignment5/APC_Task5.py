@@ -298,7 +298,8 @@ def StudentGetSchedule():
     print('Where did this code go????????')
 
 
-        
+Student.removecourse("Issac Newton", "Newton")
+
 database.commit() #Close and exit db
   
 database.close()
