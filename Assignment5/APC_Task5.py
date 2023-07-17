@@ -73,8 +73,6 @@ class instructor (User):
     def __init__(self, Firstname, Lastname, ID, courses):
         User.__init__(self, courses) # call base constructor
         self.courses = courses
-    def printAllCourses():
-        PrintCourseList()
     def findcourse():
         SearchCourse()
     def getcourselist(self):
