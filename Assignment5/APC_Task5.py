@@ -24,6 +24,77 @@ cur.execute("""CREATE TABLE if not exists Course(
 #cur.execute("INSERT INTO Course VALUES(03648, 'Materials', 'BSME', '8:00', 'MTR', 'Summer', 2023, 3, 'Bernoulli');")
 #cur.execute("INSERT INTO Course VALUES(33957, 'Computer Network', 'BSCO', '11:00', 'MF', 'Summer', 2023, 4, 'Hasebbo');")
 
+
+class User:
+# constructor
+    def __init__(self, Firstname, Lastname, ID):
+        self.Firstname = Firstname
+        self.Lastname = Lastname
+        self.ID = ID
+    # set and get
+    def setName(self, Firstname, Lastname, ID):
+        self.Firstname = Firstname
+        self.Lastname = Lastname
+        self.ID = ID
+    def getName(self):
+        return self.Firstname, self.Lastname, self.ID
+    # similar to toString
+    def description(self):
+        return 0
+
+
+class Student (User):
+# constructor
+    def __init__(self, Firstname, Lastname, ID, courses):
+        User.__init__(self, Firstname, Lastname, ID, courses) # call base constructor
+        self.courses = courses
+    def findcourse(self):
+        SearchCourse()
+    def setcourse(self, courses): #add classes to database
+        print("Courses added")
+        #self.courses = courses 
+    def removecourse(self, courses): #remove courses
+        print("Removed Course")
+        #self.courses = courses
+    def getschedule(self):
+        return print(self, "Schedule")
+    #self.courses
+    
+
+class instructor (User):
+# constructor
+    def __init__(self, Firstname, Lastname, ID, courses):
+        User.__init__(self, courses) # call base constructor
+        self.courses = courses
+    def findcourse(self):
+        SearchCourse()
+    def getcourselist(self):
+        print(self, "'s Course list")
+        #return self.length
+    def DisplaySchedule(self, courses):
+        print(self, "Schedule")
+        #self.width = height
+    
+
+class admin (User):
+# constructor
+    def __init__(self, Firstname, Lastname, ID, editingID, course):
+        User.__init__(self, editingID, course) # call base constructor
+        self.editingID = editingID
+        self.course = course
+    def addcourse(self, course):
+        print("Add course to catalog")
+    def addcourse(self, course):
+        print("Remove course from catalog")
+    def addcourseto(self, editingID, course):
+        print("Add course to given ID")
+    def removecourseto(self, editingID, course):
+        print("Remove course from given ID")
+    def checkIDschhedule(self, editingID):
+        print("ID", editingID, "'s schedule")
+
+
+
 def SearchCourse():  #Function for searching a course given a parameter (Adam)
     searchMethod = 0
     print('Course Search:')
