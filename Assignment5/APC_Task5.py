@@ -86,7 +86,7 @@ class instructor (User):
         query_result = cur.fetchall()
         for i in query_result:
             print(i) 
-    def DisplaySchedule(self, courses):
+    def DisplaySchedule(self, Lastname):
         cur.execute("""SELECT courseCRN FROM INSTRUCTOR WHERE SURNAME = '%s'""" % Lastname)
         query_result = cur.fetchall()
         for i in query_result:
@@ -103,7 +103,7 @@ class admin (User):
         self.course = course
     def addcourse(self, course):
         intCRN = int(input('Course CRN: '))
-        Name = input('Course Name: ')
+        sName = input('Course Name: ')
         sDept = input('Course Department: ')
         sTime = input('Course Time: ')
         sDays = input('Days of the week: ')
@@ -244,6 +244,7 @@ run = True
 while run == True: #Run as long as you are signed in (Liam)
 
     usersName = '' 
+    run = False
 
     #if User == 'Admin': #Admin commands and functions (Adam)
     #    actions = printOptions(1)
