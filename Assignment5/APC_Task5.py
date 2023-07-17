@@ -55,16 +55,17 @@ class Student (User):
     def __init__(self, Firstname, Lastname, ID, courses):
         User.__init__(self, Firstname, Lastname, ID, courses) # call base constructor
         self.courses = courses
-    def setcourse(self, courses): #add classes to database
+        self.Lastname = Lastname
+    def setcourse(self, Lastname): #add classes to database
         aCRN = int(input('What is the CRN of the course you like to add: '))
-        cur.execute("""UPDATE STUDENT SET courseCRN = '%d'""" % aCRN)
+        cur.execute("""UPDATE STUDENT SET courseCRN = '%d' WHERE SURNAME = '%s'""" % (aCRN, Lastname))
         #self.courses = courses 
-    def removecourse(self, courses): #remove courses
+    def removecourse(self, Lastname): #remove courses
         rCRN = int(input('What is the CRN of the course you want to Drop: '))
-        cur.execute("""DELETE FROM STUDENT WHERE courseCRN = '%d'""" % rCRN)
+        cur.execute("""DELETE courseCRN FROM STUDENT WHERE courseCRN = '%d', SURNAME = '%s'""" % (rCRN, Lastname))
         #self.courses = courses
-    def getschedule():
-        StudentGetSchedule()
+    def getschedule(self, Lastname):
+        cur.execute("""SELECT courseCRN FROM STUDENT WHERE SURNAME = '%s'""" % Lastname)
     #self.courses
     
 
