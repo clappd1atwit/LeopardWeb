@@ -53,9 +53,8 @@ class User:
 
 class Student (User):
 # constructor
-    def __init__(self, Firstname, Lastname, ID, courses):
-        User.__init__(self, Firstname, Lastname, ID, courses) # call base constructor
-        self.courses = courses
+    def __init__(self, Firstname, Lastname, ID):
+        User.__init__(self, Firstname, Lastname, ID) # call base constructor
         self.Lastname = Lastname
     def setcourse(self, Lastname): #add classes to database
         aCRN = int(input('What is the CRN of the course you like to add: '))
@@ -63,7 +62,7 @@ class Student (User):
         #self.courses = courses 
     def removecourse(self, Lastname): #remove courses
         rCRN = int(input('What is the CRN of the course you want to Drop: '))
-        cur.execute("""DELETE courseCRN FROM STUDENT WHERE courseCRN = '%d', SURNAME = '%s'""" % (rCRN, Lastname))
+        cur.execute("""UPDATE STUDENT SET courseCRN = '' WHERE courseCRN = '%d' AND SURNAME = '%s'""" % (rCRN, Lastname))
         #self.courses = courses
     def getschedule(self, Lastname):
         cur.execute("""SELECT courseCRN FROM STUDENT WHERE SURNAME = '%s'""" % Lastname)
@@ -75,12 +74,11 @@ class Student (User):
 
 class instructor (User):
 # constructor
-    def __init__(self, Firstname, Lastname, ID, courses):
-        User.__init__(self, courses, Lastname) # call base constructor
-        self.courses = courses
+    def __init__(self, Firstname, Lastname, ID):
+        User.__init__(self, Lastname) # call base constructor
         self.Lastname = Lastname
     def getcourselist(self, Lastname):
-        cur.execute("""SELECT CRN FROM Course WHERE professor = '%s'""" % usersName)
+        cur.execute("""SELECT CRN FROM Course WHERE professor = '%s'""" % Lastname)
         query_CRN = cur.fetchall()
         cur.execute("""SELECT NAME, SURNAME FROM STUDENT WHERE courseCRN = '%s'""" % query_CRN)
         query_result = cur.fetchall()
@@ -97,11 +95,9 @@ class instructor (User):
 
 class admin (User):
 # constructor
-    def __init__(self, Firstname, Lastname, ID, editingID, course):
-        User.__init__(self, editingID, course) # call base constructor
-        self.editingID = editingID
-        self.course = course
-    def addcourse(self, course):
+    def __init__(self, Firstname, Lastname, ID):
+        User.__init__(self) # call base constructor
+    def addcourse():
         intCRN = int(input('Course CRN: '))
         sName = input('Course Name: ')
         sDept = input('Course Department: ')
@@ -113,35 +109,35 @@ class admin (User):
         sProf = input('Who is teaching the class: ')
         cur.execute("""INSERT INTO Course VALUES('%d','%s', '%s','%s', '%s', '%s', '%d', '%d', '%s')""" % (intCRN, sName, sDept, sTime, sDays, sSemester, intYear, intCredit, sProf))
         
-    def RemoveCourse(self, course):
+    def RemoveCourse():
         rCRN = int(input('What is the CRN of the course you want to remove: '))
         cur.execute("""DELETE FROM Course WHERE CRN = '%d'""" % rCRN)
-    def addcourseto(self, editingID, course):
+    def addcourseto():
         resp = input("Do you want to add a course from a Student or Instructor: ")
 
         if resp == 'Student':
             sID = int(input('What is the Students ID: '))
             iCRN = int(input('What CRN would you like to add: '))
-            cur.execute("""UPDATE courseCRN FROM STUDENT WHERE courseCRN = '%d', ID = '%d'""" % (iCRN, sID))
+            cur.execute("""UPDATE STUDENT SET courseCRN = '%d' WHERE ID = '%d'""" % (iCRN, sID))
         elif resp == instructor:
             sID = int(input('What is the Instructors ID: '))
             iCRN = int(input('What CRN would you like to add: '))
-            cur.execute("""UPDATE courseCRN FROM INSTRUCTOR WHERE courseCRN = '%d', ID = '%d'""" % (iCRN, sID))
+            cur.execute("""UPDATE INSTRUCTOR SET courseCRN = '%d' WHERE ID = '%d'""" % (iCRN, sID))
         else:
             print('Not a valid responce')
-    def removecourseto(self):
+    def removecourseto():
         resp = input('Do you want to remove a course from a Student or Instructor: ')
         if resp == 'Student':
             sID = int(input('What is the Students ID: '))
             iCRN = int(input('What CRN would you like to remove: '))
-            cur.execute("""DELETE courseCRN FROM STUDENT WHERE courseCRN = '%d', ID = '%d'""" % (iCRN, sID))
+            cur.execute("""UPDATE STUDENT SET courseCRN = '' WHERE ID = '%d' AND courseCRN = '%d'""" % (sID, iCRN))
         elif resp == instructor:
             sID = int(input('What is the Instructors ID: '))
             iCRN = int(input('What CRN would you like to remove: '))
-            cur.execute("""DELETE courseCRN FROM INSTRUCTOR WHERE courseCRN = '%d', ID = '%d'""" % (iCRN, sID))
+            cur.execute("""UPDATE INSTRUCTOR SET courseCRN = '' WHERE ID = '%d' AND courseCRN = '%d'""" % (sID, iCRN))
         else:
             print('Not a valid responce')
-    def checkIDschhedule(self, editingID):
+    def checkIDschhedule():
         resp = input("Do you want to check the schedule of a Student or Instructor: ")
 
 
@@ -178,8 +174,6 @@ def SearchCourse():  #Function for searching a course given a parameter (Adam)
         query_result = cur.fetchall()
         for i in query_result:
 	        print(i)
-    
-
 
 
 def printOptions(userNum): #Menu for selecting what you want to do
