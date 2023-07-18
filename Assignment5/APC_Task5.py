@@ -48,7 +48,8 @@ class User:
         query_result = cur.fetchall()
         for i in query_result:
 	        print(i)
-
+        return query_result[0]
+    
     def searchcourse(self):
         SearchCourse()
 
@@ -66,15 +67,14 @@ class student (User):
         cur.execute("""UPDATE STUDENT SET courseCRN = '%d' WHERE SURNAME = '%s'""" % (aCRN, self.Lastname))
 
     def removecourse(self, rCRN): #remove courses
-        
-        cur.execute("""UPDATE STUDENT SET courseCRN = NULL WHERE courseCRN = '%d' AND SURNAME = '%s'""" % (rCRN, self.Lastname))
+        cur.execute("""UPDATE STUDENT SET courseCRN = NULL WHERE courseCRN = '%d' AND SURNAME = '%s'""" % (int(rCRN), self.Lastname))
 
     def getschedule(self):
         cur.execute("""SELECT courseCRN FROM STUDENT WHERE SURNAME = '%s'""" % self.Lastname)
-        query_result = cur.fetchall()
+        query_result = cur.fetchone()
         for i in query_result:
 	        print(i)
-        return query_result
+        return query_result[0]
     #self.courses
     
 
@@ -91,6 +91,7 @@ class instructor (User):
         query_result = cur.fetchall()
         for i in query_result:
             print(i) 
+        return query_result
 
     def DisplaySchedule(self):
         cur.execute("""SELECT courseCRN FROM INSTRUCTOR WHERE SURNAME = '%s'""" % self.Lastname)
@@ -109,8 +110,7 @@ class admin (User):
     def addcourse(self, intCRN, sName, sDept, sTime, sDays, sSemester, intYear, intCredit, sProf):
         cur.execute("""INSERT INTO Course VALUES('%d','%s', '%s','%s', '%s', '%s', '%d', '%d', '%s')""" % (intCRN, sName, sDept, sTime, sDays, sSemester, intYear, intCredit, sProf))
         
-    def removecourse(self):
-        rCRN = int(input('What is the CRN of the course you want to remove: '))
+    def removecourse(self, rCRN):
         cur.execute("""DELETE FROM Course WHERE CRN = '%d'""" % rCRN)
 
     def addcourseto(self):
@@ -279,7 +279,8 @@ while run: #Run as long as you are signed in (Liam)
            sProf = input('Who is teaching the class: ')
            userAdmin.addcourse(intCRN, sName, sDept, sTime, sDays, sSemester, intYear, intCredit, sProf)
        elif actions == '4':
-           userAdmin.removecourse()
+           rCRN = int(input('What is the CRN of the course you want to remove: '))
+           userAdmin.removecourse(rCRN)
        elif actions == '5':
            run = False
 
@@ -344,6 +345,6 @@ while run: #Run as long as you are signed in (Liam)
 
 # Student.removecourse("Issac Newton", "Newton")
 
-database.commit() #Close and exit db
+#database.commit() #Close and exit db
   
-database.close()
+#database.close()
