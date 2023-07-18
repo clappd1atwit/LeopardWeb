@@ -62,19 +62,19 @@ class student (User):
         User.__init__(self, Firstname, Lastname, ID) # call base constructor
         self.Lastname = Lastname
 
-    def addcourse(self): #add classes to database
-        aCRN = int(input('What is the CRN of the course you like to add: '))
+    def addcourse(self, aCRN): #add classes to database
         cur.execute("""UPDATE STUDENT SET courseCRN = '%d' WHERE SURNAME = '%s'""" % (aCRN, self.Lastname))
 
     def removecourse(self): #remove courses
         rCRN = int(input('What is the CRN of the course you want to Drop: '))
-        cur.execute("""UPDATE STUDENT SET courseCRN = '' WHERE courseCRN = '%d' AND SURNAME = '%s'""" % (rCRN, self.Lastname))
+        cur.execute("""UPDATE STUDENT SET courseCRN = NULL WHERE courseCRN = '%d' AND SURNAME = '%s'""" % (rCRN, self.Lastname))
 
     def getschedule(self):
         cur.execute("""SELECT courseCRN FROM STUDENT WHERE SURNAME = '%s'""" % self.Lastname)
         query_result = cur.fetchall()
         for i in query_result:
 	        print(i)
+        return query_result
     #self.courses
     
 
@@ -306,7 +306,8 @@ while run: #Run as long as you are signed in (Liam)
        elif actions == '2':
            userStudent.searchcourse()
        if actions == '3':
-           userStudent.addcourse()
+           aCRN = int(input('What is the CRN of the course you like to add: '))
+           userStudent.addcourse(aCRN)
        elif actions == '4':
            userStudent.removecourse()
        elif actions == '5':
@@ -326,12 +327,3 @@ while run: #Run as long as you are signed in (Liam)
 database.commit() #Close and exit db
   
 database.close()
-
-
-############################# TESTS ##########################
-import unittest
-
-class testUser(unittest.TestCase):
-    
-    def test_admin(self):
-
