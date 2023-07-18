@@ -1,5 +1,6 @@
 from ctypes.wintypes import CHAR
 import sqlite3
+import re
 
 database = sqlite3.connect("assignment3.db") 
 
@@ -17,13 +18,13 @@ cur.execute("""CREATE TABLE if not exists Course(
 );""")#Created Course table if not already made
 
 #Needs to be run first time to setup db
-#cur.execute("""ALTER TABLE STUDENT ADD COLUMN courseCRN""")
-#cur.execute("""ALTER TABLE INSTRUCTOR ADD COLUMN courseCRN""")
-#cur.execute("INSERT INTO Course VALUES(34285, 'Advanced Digital', 'BSCO', '12:30', 'MF', 'Summer', 2023, 4, 'Pilin');")
-#cur.execute("INSERT INTO Course VALUES(33950, 'Applied Programming', 'BSCO', '8:00', 'MTR', 'Summer', 2023, 3, 'Rawlins');")
-#cur.execute("INSERT INTO Course VALUES(12865, 'Econ', 'HUSS', '8:00', 'MTR', 'Summer', 2023, 4, 'Cort');")
-#cur.execute("INSERT INTO Course VALUES(03648, 'Materials', 'BSME', '8:00', 'MTR', 'Summer', 2023, 3, 'Bernoulli');")
-#cur.execute("INSERT INTO Course VALUES(33957, 'Computer Network', 'BSCO', '11:00', 'MF', 'Summer', 2023, 4, 'Hasebbo');")
+# cur.execute("""ALTER TABLE STUDENT ADD COLUMN courseCRN""")
+# cur.execute("""ALTER TABLE INSTRUCTOR ADD COLUMN courseCRN""")
+# cur.execute("INSERT INTO Course VALUES(34285, 'Advanced Digital', 'BSCO', '12:30', 'MF', 'Summer', 2023, 4, 'Pilin');")
+# cur.execute("INSERT INTO Course VALUES(33950, 'Applied Programming', 'BSCO', '8:00', 'MTR', 'Summer', 2023, 3, 'Rawlins');")
+# cur.execute("INSERT INTO Course VALUES(12865, 'Econ', 'HUSS', '8:00', 'MTR', 'Summer', 2023, 4, 'Cort');")
+# cur.execute("INSERT INTO Course VALUES(03648, 'Materials', 'BSME', '8:00', 'MTR', 'Summer', 2023, 3, 'Bernoulli');")
+# cur.execute("INSERT INTO Course VALUES(33957, 'Computer Network', 'BSCO', '11:00', 'MF', 'Summer', 2023, 4, 'Hasebbo');")
 
 
 class User:
@@ -32,40 +33,45 @@ class User:
         self.Firstname = Firstname
         self.Lastname = Lastname
         self.ID = ID
+
     # set and get
     def setName(self, Firstname, Lastname, ID):
         self.Firstname = Firstname
         self.Lastname = Lastname
         self.ID = ID
+
     def getName(self):
         return self.Firstname, self.Lastname, self.ID
-    # similar to toString
-    def printAllCourses():
+
+    def searchall(self):
         cur.execute("""SELECT * FROM Course""")
         query_result = cur.fetchall()
         for i in query_result:
 	        print(i)
-    def findcourse():
+
+    def searchcourse(self):
         SearchCourse()
+
     def description(self):
         return 0
 
 
-class Student (User):
+class student (User):
 # constructor
     def __init__(self, Firstname, Lastname, ID):
         User.__init__(self, Firstname, Lastname, ID) # call base constructor
         self.Lastname = Lastname
-    def setcourse(self, Lastname): #add classes to database
+
+    def addcourse(self): #add classes to database
         aCRN = int(input('What is the CRN of the course you like to add: '))
-        cur.execute("""UPDATE STUDENT SET courseCRN = '%d' WHERE SURNAME = '%s'""" % (aCRN, Lastname))
-        #self.courses = courses 
-    def removecourse(self, Lastname): #remove courses
+        cur.execute("""UPDATE STUDENT SET courseCRN = '%d' WHERE SURNAME = '%s'""" % (aCRN, self.Lastname))
+
+    def removecourse(self): #remove courses
         rCRN = int(input('What is the CRN of the course you want to Drop: '))
-        cur.execute("""UPDATE STUDENT SET courseCRN = '' WHERE courseCRN = '%d' AND SURNAME = '%s'""" % (rCRN, Lastname))
-        #self.courses = courses
-    def getschedule(self, Lastname):
-        cur.execute("""SELECT courseCRN FROM STUDENT WHERE SURNAME = '%s'""" % Lastname)
+        cur.execute("""UPDATE STUDENT SET courseCRN = '' WHERE courseCRN = '%d' AND SURNAME = '%s'""" % (rCRN, self.Lastname))
+
+    def getschedule(self):
+        cur.execute("""SELECT courseCRN FROM STUDENT WHERE SURNAME = '%s'""" % self.Lastname)
         query_result = cur.fetchall()
         for i in query_result:
 	        print(i)
@@ -77,15 +83,17 @@ class instructor (User):
     def __init__(self, Firstname, Lastname, ID):
         User.__init__(self, Lastname) # call base constructor
         self.Lastname = Lastname
-    def getcourselist(self, Lastname):
-        cur.execute("""SELECT CRN FROM Course WHERE professor = '%s'""" % Lastname)
+
+    def getcourselist(self):
+        cur.execute("""SELECT CRN FROM Course WHERE professor = '%s'""" % self.Lastname)
         query_CRN = cur.fetchall()
         cur.execute("""SELECT NAME, SURNAME FROM STUDENT WHERE courseCRN = '%s'""" % query_CRN)
         query_result = cur.fetchall()
         for i in query_result:
             print(i) 
-    def DisplaySchedule(self, Lastname):
-        cur.execute("""SELECT courseCRN FROM INSTRUCTOR WHERE SURNAME = '%s'""" % Lastname)
+
+    def DisplaySchedule(self):
+        cur.execute("""SELECT courseCRN FROM INSTRUCTOR WHERE SURNAME = '%s'""" % self.Lastname)
         query_result = cur.fetchall()
         for i in query_result:
 	        print(i)
@@ -97,7 +105,8 @@ class admin (User):
 # constructor
     def __init__(self, Firstname, Lastname, ID):
         User.__init__(self) # call base constructor
-    def addcourse():
+
+    def addcourse(self):
         intCRN = int(input('Course CRN: '))
         sName = input('Course Name: ')
         sDept = input('Course Department: ')
@@ -109,10 +118,11 @@ class admin (User):
         sProf = input('Who is teaching the class: ')
         cur.execute("""INSERT INTO Course VALUES('%d','%s', '%s','%s', '%s', '%s', '%d', '%d', '%s')""" % (intCRN, sName, sDept, sTime, sDays, sSemester, intYear, intCredit, sProf))
         
-    def RemoveCourse():
+    def removecourse(self):
         rCRN = int(input('What is the CRN of the course you want to remove: '))
         cur.execute("""DELETE FROM Course WHERE CRN = '%d'""" % rCRN)
-    def addcourseto():
+
+    def addcourseto(self):
         resp = input("Do you want to add a course from a Student or Instructor: ")
 
         if resp == 'Student':
@@ -125,7 +135,8 @@ class admin (User):
             cur.execute("""UPDATE INSTRUCTOR SET courseCRN = '%d' WHERE ID = '%d'""" % (iCRN, sID))
         else:
             print('Not a valid responce')
-    def removecourseto():
+
+    def removecourseto(self):
         resp = input('Do you want to remove a course from a Student or Instructor: ')
         if resp == 'Student':
             sID = int(input('What is the Students ID: '))
@@ -137,9 +148,9 @@ class admin (User):
             cur.execute("""UPDATE INSTRUCTOR SET courseCRN = '' WHERE ID = '%d' AND courseCRN = '%d'""" % (sID, iCRN))
         else:
             print('Not a valid responce')
-    def checkIDschhedule():
-        resp = input("Do you want to check the schedule of a Student or Instructor: ")
 
+    def checkIDschhedule(self):
+        resp = input("Do you want to check the schedule of a Student or Instructor: ")
 
 
 def SearchCourse():  #Function for searching a course given a parameter (Adam)
@@ -192,22 +203,13 @@ def printOptions(userNum): #Menu for selecting what you want to do
         print('4: Drop Course')
         print('5: Log out')
     UserInput = input('')
-    if UserInput == '1':
-        cur.execute("""SELECT * FROM Course""")
-        query_result = cur.fetchall()
-        for i in query_result:
-	        print(i)
-    elif UserInput == '2':
-        SearchCourse()
     return UserInput
 
 
 #Function for Log in (Liam/Dan)
-def login():
+def login(email):
     successful_login = 0
     while(successful_login == 0):
-        print('Log in')
-        email = input('Email: ')
         cur.execute("""SELECT COUNT(*) FROM STUDENT WHERE EMAIL = '%s'""" % email)
         query_result = cur.fetchone()
         if(query_result[0] == 1):
@@ -217,9 +219,6 @@ def login():
             cur.execute("""SELECT COUNT(*) FROM INSTRUCTOR WHERE EMAIL = '%s'""" % email)
             query_result = cur.fetchone()
             if(query_result[0] == 1):
-                cur.execute("""SELECT SURNAME FROM INSTRUCTOR WHERE EMAIL = '%s'""" % email)
-                query_result = cur.fetchone()
-                usersName = query_result
                 return 'Instructor'
                 successful_login = 1
             else:
@@ -230,69 +229,100 @@ def login():
                     successful_login = 1
                 else:
                     print("invalid email ... try again")
-    
+                    email = input('Email: ')
 
-User = login()
-
+print('Log in')
+email = input('Email: ')
+User = login(email)
 run = True
-while run == True: #Run as long as you are signed in (Liam)
+while run: #Run as long as you are signed in (Liam)
 
     usersName = '' 
     run = False
 
-    #if User == 'Admin': #Admin commands and functions (Adam)
-    #    actions = printOptions(1)
-    #    if actions == '3':
-    #        intCRN = int(input('Course CRN: '))
-    #        sName = input('Course Name: ')
-    #        sDept = input('Course Department: ')
-    #        sTime = input('Course Time: ')
-    #        sDays = input('Days of the week: ')
-    #        sSemester = input('Semester Offered: ')
-    #        intYear = int(input('Year Course is offered: '))
-    #        intCredit = int(input('Number of credits for course: '))
-    #        sProf = input('Who is teaching the class: ')
-    #        cur.execute("""INSERT INTO Course VALUES('%d','%s', '%s','%s', '%s', '%s', '%d', '%d', '%s')""" % (intCRN, sName, sDept, sTime, sDays, sSemester, intYear, intCredit, sProf))
-    #    elif actions == '4':
-    #        rCRN = int(input('What is the CRN of the course you want to remove: '))
-    #        cur.execute("""DELETE FROM Course WHERE CRN = '%d'""" % rCRN)
-    #    elif actions == '5':
-    #        run = False
+    if User == 'Admin': #Admin commands and functions (Adam)
+       # Fetch first name of admin
+       cur.execute("""SELECT NAME FROM ADMIN WHERE EMAIL = '%s'""" % email)
+       admin_name = re.sub('\W', '', (str)(cur.fetchone()))
+       # Fetch last name of admin
+       cur.execute("""SELECT SURNAME FROM ADMIN WHERE EMAIL = '%s'""" % email)
+       admin_surname = re.sub('\W', '', (str)(cur.fetchone()))
+       # Fetch ID of admin
+       cur.execute("""SELECT ID FROM ADMIN WHERE EMAIL = '%s'""" % email)
+       admin_id = re.sub('\W', '', (str)(cur.fetchone()))
 
-    #elif User == 'Instructor': #Instructor commands and functions (Adam)
-    #    actions = printOptions(2)
-    #    if actions == '3':
-    #        cur.execute("""SELECT CRN FROM Course WHERE professor = '%s'""" % usersName)
-    #        query_CRN = cur.fetchall()
-    #        cur.execute("""SELECT NAME, SURNAME FROM STUDENT WHERE courseCRN = '%s'""" % query_CRN)
-    #        query_result = cur.fetchall()
-    #        for i in query_result:
-    #            print(i) 
-    #    elif actions == '4':
-    #        run = False
+       userAdmin = admin(admin_name, admin_surname, admin_id)
+       print('Welcome,', admin_name, admin_surname)
+       actions = printOptions(1)
+       if actions == '1':
+          userAdmin.searchall()
+       elif actions == '2':
+           userAdmin.searchcourse()
+       if actions == '3':
+           userAdmin.addcourse()
+       elif actions == '4':
+           userAdmin.removecourse()
+       elif actions == '5':
+           run = False
+
+    elif User == 'Instructor': #Instructor commands and functions (Adam/Dan)
+       # Fetch first name of instructor
+       cur.execute("""SELECT NAME FROM INSTRUCTOR WHERE EMAIL = '%s'""" % email)
+       instructor_name = re.sub('\W', '', (str)(cur.fetchone()))
+       # Fetch last name of instructor
+       cur.execute("""SELECT SURNAME FROM INSTRUCTOR WHERE EMAIL = '%s'""" % email)
+       instructor_surname = re.sub('\W', '', (str)(cur.fetchone()))
+       # Fetch ID of instructor
+       cur.execute("""SELECT ID FROM INSTRUCTOR WHERE EMAIL = '%s'""" % email)
+       instructor_id = re.sub('\W', '', (str)(cur.fetchone()))
+
+       userInstructor = instructor(instructor_name, instructor_surname, instructor_id)
+       print('Welcome,', instructor_name, instructor_surname)
+       actions = printOptions(2)
+       if actions == '1':
+          userInstructor.searchall()
+       elif actions == '2':
+           userInstructor.searchcourse()
+       if actions == '3':
+           userInstructor.getcourselist()
+       elif actions == '4':
+           run = False
     
+    elif User == 'Student': #Student commands and functions(Adam/Dan)
+       # Fetch first name of student
+       cur.execute("""SELECT NAME FROM STUDENT WHERE EMAIL = '%s'""" % email)
+       student_name = re.sub('\W', '', (str)(cur.fetchone()))
+       # Fetch last name of student
+       cur.execute("""SELECT SURNAME FROM STUDENT WHERE EMAIL = '%s'""" % email)
+       student_surname = re.sub('\W', '', (str)(cur.fetchone()))
+       # Fetch ID of student
+       cur.execute("""SELECT ID FROM STUDENT WHERE EMAIL = '%s'""" % email)
+       student_id = re.sub('\W', '', (str)(cur.fetchone()))
 
-    #elif User == 'Student': #Student commands and functions(Adam)
-    #    actions = printOptions(3)
-    #    if actions == '3':
-    #        aCRN = int(input('What is the CRN of the course you like to add: '))
-    #        cur.execute("""UPDATE STUDENT SET courseCRN = '%d'""" % aCRN)
-    #    elif actions == '4':
-    #        rCRN = int(input('What is the CRN of the course you want to Drop: '))
-    #        cur.execute("""DELETE FROM STUDENT WHERE courseCRN = '%d'""" % rCRN)
-    #    elif actions == '5':
-    #        run = False
+       userStudent = student(student_name, student_surname, student_id)
+       print('Welcome,', student_name, student_surname)
+       actions = printOptions(3)
+       if actions == '1':
+          userStudent.searchall()
+       elif actions == '2':
+           userStudent.searchcourse()
+       if actions == '3':
+           userStudent.addcourse()
+       elif actions == '4':
+           userStudent.removecourse()
+       elif actions == '5':
+           run = False
 
 
-    #else: #Error message
-    #    print('Error: Not a user')
+    else: #Error message
+       print('Error: Not a user')
 
 
-def StudentGetSchedule():
-    print('Where did this code go????????')
+# def StudentGetSchedule():
+#     print('Where did this code go????????')
 
 
-Student.removecourse("Issac Newton", "Newton")
+# Student.removecourse("Issac Newton", "Newton")
 
 database.commit() #Close and exit db
   
