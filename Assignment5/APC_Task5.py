@@ -149,6 +149,25 @@ class admin (User):
         else:
             print('Not a valid responce')
 
+    def AddStudent():
+        iID = int(input('Student ID: '))
+        sName = input('Student First Name: ')
+        sSUR = input('Student Last Name: ')
+        iYear = int(input('What year does the student graduate: '))
+        sMajor = input('What is the students major: ')
+        sEmail = input('What is the students email: ')
+        cur.execute("""INSERT INTO STUDENT VALUES('%d','%s', '%s','%d', '%s', '%s', '%d')""" % (iID, sName, sSUR, iYear, sMajor, sEmail, NULL))
+
+    def AddInstructor():
+        iID = int(input('Instructor ID: '))
+        sName = input('Instructor First Name: ')
+        sSUR = input('Instructor Last Name: ')
+        sTitle =  input('What is the Instructor title: ')
+        iYear = int(input('What year did the Instructor start: '))
+        sDept = input('What department is the Instructor in: ')
+        sEmail = input('What is the Instructor email: ')
+        cur.execute("""INSERT INTO STUDENT VALUES('%d','%s', '%s', '%s', '%d', '%s', '%s', '%d')""" % (iID, sName, sSUR, sTitle, iYear, sDept, sEmail, NULL))
+
     def checkIDschhedule(self):
         resp = input("Do you want to check the schedule of a Student or Instructor: ")
 
