@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from ctypes.wintypes import CHAR
 import sqlite3
 import re
@@ -18,8 +19,8 @@ cur.execute("""CREATE TABLE if not exists Course(
 );""")#Created Course table if not already made
 
 #Needs to be run first time to setup db
-# cur.execute("""ALTER TABLE STUDENT ADD COLUMN courseCRN""")
-# cur.execute("""ALTER TABLE INSTRUCTOR ADD COLUMN courseCRN""")
+#cur.execute("""ALTER TABLE STUDENT ADD COLUMN courseCRN""")
+#cur.execute("""ALTER TABLE INSTRUCTOR ADD COLUMN courseCRN""")
 # cur.execute("INSERT INTO Course VALUES(34285, 'Advanced Digital', 'BSCO', '12:30', 'MF', 'Summer', 2023, 4, 'Pilin');")
 # cur.execute("INSERT INTO Course VALUES(33950, 'Applied Programming', 'BSCO', '8:00', 'MTR', 'Summer', 2023, 3, 'Rawlins');")
 # cur.execute("INSERT INTO Course VALUES(12865, 'Econ', 'HUSS', '8:00', 'MTR', 'Summer', 2023, 4, 'Cort');")
@@ -151,6 +152,25 @@ class admin (User):
 
     def checkIDschhedule(self):
         resp = input("Do you want to check the schedule of a Student or Instructor: ")
+
+    def AddStudent():
+        iID = int(input('Student ID: '))
+        sName = input('Student First Name: ')
+        sSUR = input('Student Last Name: ')
+        iYear = int(input('What year does the student graduate: '))
+        sMajor = input('What is the students major: ')
+        sEmail = input('What is the students email: ')
+        cur.execute("""INSERT INTO STUDENT VALUES('%d','%s', '%s','%d', '%s', '%s', '%d')""" % (iID, sName, sSUR, iYear, sMajor, sEmail, NULL))
+
+    def AddInstructor():
+        iID = int(input('Instructor ID: '))
+        sName = input('Instructor First Name: ')
+        sSUR = input('Instructor Last Name: ')
+        sTitle =  input('What is the Instructor title: ')
+        iYear = int(input('What year did the Instructor start: '))
+        sDept = input('What department is the Instructor in: ')
+        sEmail = input('What is the Instructor email: ')
+        cur.execute("""INSERT INTO STUDENT VALUES('%d','%s', '%s', '%s', '%d', '%s', '%s', '%d')""" % (iID, sName, sSUR, sTitle, iYear, sDept, sEmail, NULL))
 
 
 def SearchCourse():  #Function for searching a course given a parameter (Adam)
@@ -322,16 +342,10 @@ while run: #Run as long as you are signed in (Liam)
 
 
 # Student.removecourse("Issac Newton", "Newton")
+#admin.AddStudent()
 
 database.commit() #Close and exit db
   
 database.close()
 
-
-############################# TESTS ##########################
-import unittest
-
-class testUser(unittest.TestCase):
-    
-    def test_admin(self):
 
