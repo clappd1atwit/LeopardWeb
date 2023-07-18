@@ -65,8 +65,8 @@ class student (User):
     def addcourse(self, aCRN): #add classes to database
         cur.execute("""UPDATE STUDENT SET courseCRN = '%d' WHERE SURNAME = '%s'""" % (aCRN, self.Lastname))
 
-    def removecourse(self): #remove courses
-        rCRN = int(input('What is the CRN of the course you want to Drop: '))
+    def removecourse(self, rCRN): #remove courses
+        
         cur.execute("""UPDATE STUDENT SET courseCRN = NULL WHERE courseCRN = '%d' AND SURNAME = '%s'""" % (rCRN, self.Lastname))
 
     def getschedule(self):
@@ -106,16 +106,7 @@ class admin (User):
     def __init__(self, Firstname, Lastname, ID):
         User.__init__(self) # call base constructor
 
-    def addcourse(self):
-        intCRN = int(input('Course CRN: '))
-        sName = input('Course Name: ')
-        sDept = input('Course Department: ')
-        sTime = input('Course Time: ')
-        sDays = input('Days of the week: ')
-        sSemester = input('Semester Offered: ')
-        intYear = int(input('Year Course is offered: '))
-        intCredit = int(input('Number of credits for course: '))
-        sProf = input('Who is teaching the class: ')
+    def addcourse(self, intCRN, sName, sDept, sTime, sDays, sSemester, intYear, intCredit, sProf):
         cur.execute("""INSERT INTO Course VALUES('%d','%s', '%s','%s', '%s', '%s', '%d', '%d', '%s')""" % (intCRN, sName, sDept, sTime, sDays, sSemester, intYear, intCredit, sProf))
         
     def removecourse(self):
@@ -277,7 +268,16 @@ while run: #Run as long as you are signed in (Liam)
        elif actions == '2':
            userAdmin.searchcourse()
        if actions == '3':
-           userAdmin.addcourse()
+           intCRN = int(input('Course CRN: '))
+           sName = input('Course Name: ')
+           sDept = input('Course Department: ')
+           sTime = input('Course Time: ')
+           sDays = input('Days of the week: ')
+           sSemester = input('Semester Offered: ')
+           intYear = int(input('Year Course is offered: '))
+           intCredit = int(input('Number of credits for course: '))
+           sProf = input('Who is teaching the class: ')
+           userAdmin.addcourse(intCRN, sName, sDept, sTime, sDays, sSemester, intYear, intCredit, sProf)
        elif actions == '4':
            userAdmin.removecourse()
        elif actions == '5':
@@ -328,7 +328,8 @@ while run: #Run as long as you are signed in (Liam)
            aCRN = int(input('What is the CRN of the course you like to add: '))
            userStudent.addcourse(aCRN)
        elif actions == '4':
-           userStudent.removecourse()
+           rCRN = int(input('What is the CRN of the course you want to Drop: '))
+           userStudent.removecourse(rCRN)
        elif actions == '5':
            run = False
 
