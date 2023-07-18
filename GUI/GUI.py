@@ -116,11 +116,11 @@ class LoginFrame(tk.Frame):
         username = self.username_entry.get() 
         password = self.password_entry.get()
         
-        DbConnect = sqlite3.connect("DegreeViz-2R3.db")
+        DbConnect = sqlite3.connect("assignment3.db")
         db = DbConnect.cursor()
 
         if check_login_credentials(username, password):
-            for column in db.execute("SELECT * FROM Users WHERE Email = ? and Password = ? ", (username, password)):
+            for column in db.execute("SELECT * FROM Users WHERE EMAIL = ? and ID = ? ", (username, password)):
                 usertype= column[5];
                 if  usertype== 'S':
                     creating_user(username)
