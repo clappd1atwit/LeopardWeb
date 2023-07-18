@@ -292,8 +292,8 @@ def StudentGetSchedule():
     print('Where did this code go????????')
 
 
-Student.removecourse("Issac Newton", "Newton")
-
+#Student.removecourse("Issac Newton", "Newton")
+admin.addcourse()
 database.commit() #Close and exit db
   
 database.close()
