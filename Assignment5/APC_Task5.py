@@ -326,3 +326,12 @@ while run: #Run as long as you are signed in (Liam)
 database.commit() #Close and exit db
   
 database.close()
+
+
+############################# TESTS ##########################
+import unittest
+
+class testUser(unittest.TestCase):
+    
+    def test_admin(self):
+
