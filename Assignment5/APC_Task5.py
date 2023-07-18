@@ -238,7 +238,6 @@ run = True
 while run: #Run as long as you are signed in (Liam)
 
     usersName = '' 
-    run = False
 
     if User == 'Admin': #Admin commands and functions (Adam)
        # Fetch first name of admin
