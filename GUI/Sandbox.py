@@ -83,7 +83,9 @@ def check_login_credentials(email, password):
                 if(query_result[0] == 1):
                     login_count = 'Admin'
                     successful_login = 1
-
+                else: 
+                    login_count = 'Error'
+                    return False
 
     if login_count > str(0):
         return True
