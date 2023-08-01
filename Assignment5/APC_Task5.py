@@ -345,6 +345,6 @@ while run: #Run as long as you are signed in (Liam)
 
 # Student.removecourse("Issac Newton", "Newton")
 
-#database.commit() #Close and exit db
+database.commit() #Close and exit db
   
-#database.close()
+database.close()

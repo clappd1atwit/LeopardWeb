@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 import sqlite3
 
 # Establishing a connection to the SQLite database
@@ -60,30 +61,43 @@ class Admin(User):
         self.display_user_info()
 
 def check_login_credentials(email, password):
-    database = sqlite3.connect("DegreeViz-2R3.db")
-    cursor = database.cursor()
+    database = sqlite3.connect("assignment3.db")
+    cur = database.cursor()
     # Check if the email and password match in the LOGINS table
-    cursor.execute("SELECT COUNT(*) FROM Users WHERE Email=? AND Password=?", (email, password))
-    login_count = cursor.fetchone()[0]
+    successful_login = 0
+    while(successful_login == 0):
+        cur.execute("""SELECT COUNT(*) FROM STUDENT WHERE EMAIL = '%s'""" % email)
+        query_result = cur.fetchone()
+        if(query_result[0] == 1):
+            login_count = 'Student'
+            successful_login = 1
+        else:
+            cur.execute("""SELECT COUNT(*) FROM INSTRUCTOR WHERE EMAIL = '%s'""" % email)
+            query_result = cur.fetchone()
+            if(query_result[0] == 1):
+                login_count = 'Instructor'
+                successful_login = 1
+            else:
+                cur.execute("""SELECT COUNT(*) FROM ADMIN WHERE EMAIL = '%s'""" % email)
+                query_result = cur.fetchone()
+                if(query_result[0] == 1):
+                    login_count = 'Admin'
+                    successful_login = 1
 
-    if login_count > 0:
+
+    if login_count > str(0):
         return True
     else:
         return False
     database.commit()
     database.close()
 
-def creating_user(email):
-    database = sqlite3.connect("DegreeViz-2R3.db")
+def creating_user(email, usertype):
+    database = sqlite3.connect("assignment3.db")
     cursor = database.cursor()
-    tables = ["Users"]
-    for i in tables:
-        query = "SELECT * FROM " + i + " WHERE Email = '" + email + "'"
-        cursor.execute(query)
-        userInfo = cursor.fetchall()
-        if (len(userInfo) > 0):
-            userType = i
-            break
+    query = "SELECT * FROM " + usertype + " WHERE Email = '" + email + "'"
+    cursor.execute(query)
+    userInfo = cursor.fetchall()
 
     loggedInUser = User()
     loggedInUser.set_id(userInfo[0][0])

@@ -104,7 +104,7 @@ class LoginFrame(tk.Frame):
         self.username_entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14))
         self.username_entry.place(x=20, y=110)
         
-        self.password_label = tk.Label(self, text="Password:", font=('Times',12), bg="white")
+        self.password_label = tk.Label(self, text="ID number:", font=('Times',12), bg="white")
         self.password_label.place(x=20, y=140)
         self.password_entry = tk.Entry(self, show="*", highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14))
         self.password_entry.place(x=20, y=170)
@@ -120,20 +120,33 @@ class LoginFrame(tk.Frame):
         db = DbConnect.cursor()
 
         if check_login_credentials(username, password):
-            for column in db.execute("SELECT * FROM Users WHERE EMAIL = ? and ID = ? ", (username, password)):
-                usertype= column[5];
-                if  usertype== 'S':
-                    creating_user(username)
+            successful_login = 0
+            while(successful_login == 0):
+                db.execute("""SELECT COUNT(*) FROM STUDENT WHERE EMAIL = ? and ID = ?""", (username, password))
+                query_result = db.fetchone()
+                if(query_result[0] == 1):
+                    login_count = 'STUDENT'
+                    creating_user(username, login_count)
                     self.master.show_student_frame()
-                elif usertype == 'P':                  
-                    self.master.show_instructor_frame()
-                    creating_user(username)
-                elif usertype == 'A':
-                    self.master.show_Admin_frame()
-                    creating_user(username)
-                 
+                    successful_login = 1
                 else:
-                    messagebox.showerror("Invalid user!")
+                    db.execute("""SELECT COUNT(*) FROM INSTRUCTOR WHERE EMAIL = ? and ID = ?""", (username, password))
+                    query_result = db.fetchone()
+                    if(query_result[0] == 1):
+                        login_count = 'Instructor'
+                        self.master.show_instructor_frame()
+                        creating_user(username, login_count)
+                        successful_login = 1
+                    else:
+                        db.execute("""SELECT COUNT(*) FROM ADMIN WHERE EMAIL = ? and ID = ?""", (username, password))
+                        query_result = db.fetchone()
+                        if(query_result[0] == 1):
+                            login_count = 'Admin'
+                            self.master.show_Admin_frame()
+                            creating_user(username, login_count)
+                            successful_login = 1
+                        else:
+                            messagebox.showerror("Invalid user!")
         else:
             messagebox.showerror("Login Failed", "Invalid username or password.")          
         # Perform login validation here (e.g., check against a database)
