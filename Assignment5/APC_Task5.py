@@ -74,7 +74,6 @@ class student (User):
         query_result = cur.fetchone()
         for i in query_result:
 	        print(i)
-        return query_result[0]
     #self.courses
     
 

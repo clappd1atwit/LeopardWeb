@@ -4,8 +4,10 @@ import tkinter as tk
 from tkinter import PhotoImage, messagebox
 from PIL import ImageTk, Image
 import sqlite3
+import re
 
 page =1
+Lastname = ""
 
 class MainApplication(tk.Tk):
     def __init__(self):
@@ -113,6 +115,7 @@ class LoginFrame(tk.Frame):
         self.login_button.place(x=20, y=210)
         
     def login(self):
+        global Lastname
         username = self.username_entry.get() 
         password = self.password_entry.get()
         
@@ -134,6 +137,9 @@ class LoginFrame(tk.Frame):
                     query_result = db.fetchone()
                     if(query_result[0] == 1):
                         login_count = 'Instructor'
+                        db.execute("""SELECT SURNAME FROM INSTRUCTOR WHERE EMAIL = '%s'""" % username)
+                        prof_surname = re.sub('\W', '', (str)(db.fetchone()))
+                        Lastname = prof_surname
                         self.master.show_instructor_frame()
                         creating_user(username, login_count)
                         successful_login = 1
@@ -155,21 +161,30 @@ class LoginFrame(tk.Frame):
 class AdminPage(tk.Frame):
     def __init__(self, master):
         super().__init__(master, width = 350, height = 500, bg="white")
-        self.label = tk.Label(self, text="Admin Frame", width=32, font=('Times',14), bg="white")
+        self.label = tk.Label(self, text="Welcome Admin", width=32, font=('Times',14), bg="white")
         self.label.place(x=20, y=40)
 
         self.logout_button = tk.Button(self, text="Logout", font=('Times',12),  bg="red", fg="white", bd=0, command=self.logout)
         self.logout_button.place(x=285, y=10)
         
-        self.Search_button = tk.Button(self, text="Search Students Degree Audit", bg="black", fg="white", width=25, font=('Times',12), bd=0, command=self.SearchStudentDegreeAudit)
-        self.Search_button.place(x=70, y=120)
+        self.Course_button = tk.Button(self, text="Edit Semester Catalog", bg="black", fg="white", width=25, font=('Times',12), bd=0, command=self.Courses)
+        self.Course_button.place(x=70, y=120)
         
-        self.Add_button = tk.Button(self, text="Edit Students Degree Audit", bg="black", fg="white", width=25, font=('Times',12), bd=0, command=self.EditStudentDegreeAudit)
+        self.Add_button = tk.Button(self, text="Edit School Roster", bg="black", fg="white", width=25, font=('Times',12), bd=0, command=self.EditStudentDegreeAudit)
         self.Add_button.place(x=70, y=160)
+
+        self.Add_button = tk.Button(self, text="Link Course", bg="black", fg="white", width=25, font=('Times',12), bd=0, command=self.EditStudentDegreeAudit)
+        self.Add_button.place(x=70, y=200)
+
+
+
         
        
     def view_profile(self):
         self.master.show_profile_frame()
+    
+    def Courses(self):
+        print("Add or remove course")
         
     def SearchStudentDegreeAudit(self):
         self.master.show_SearchStudentDegreeAuditPage()
@@ -268,30 +283,58 @@ class SearchStudentDegreeAuditPage(tk.Frame):
 class InstructorFrame(tk.Frame):
     def __init__(self, master):
         super().__init__(master, width = 350, height = 500, bg="white")
-        self.label = tk.Label(self, text="Search Student Degree Audit", width=32, font=('Times',14), bg="white")
+        self.label = tk.Label(self, text="Welcome" + str(Lastname) + "", width=32, font=('Times',14), bg="white")
         self.label.place(x=20, y=40)
 
         self.logout_button = tk.Button(self, text="Logout", font=('Times',12),  bg="red", fg="white", bd=0, command=self.logout)
         self.logout_button.place(x=285, y=10)
 
-        self.student_first_name_label = tk.Label(self, text="First Name:", font=('Times',12), bg="white")
-        self.student_first_name_label.place(x=20, y=80)
-        self.student_first_name_entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
-        self.student_first_name_entry.place(x=20, y=110)
+        self.getcrnList_btn = tk.Button(self, text="Course List", font=('Times',12),  bg="white", fg="black", bd=0, command=self.getCourselist)
+        self.getcrnList_btn.place(x=20, y=80)
 
-        self.student_Last_name_label = tk.Label(self, text="Last Name:", font=('Times',12), bg="white")
-        self.student_Last_name_label.place(x=20, y=140)
-        self.student_Last_name_entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14))
-        self.student_Last_name_entry.place(x=20, y=170)
-        
-        self.logout_button = tk.Button(self, text="Search", width=34, font=('Times',12), bg="black", fg="white", bd=0, command=self.SearchStudentAudit)
-        self.logout_button.place(x=20, y=230)
-        
-    def SearchStudentAudit(self):
-        print("Print student degree audit")
+        self.getRoster_btn = tk.Button(self, text="Roster List", font=('Times',12),  bg="white", fg="black", bd=0, command=self.getRoster)
+        self.getRoster_btn.place(x=20, y=150)
+
+        self.getRoster_btn = tk.Button(self, text="Print Courses", font=('Times',12),  bg="white", fg="black", bd=0, command=self.printCourses)
+        self.getRoster_btn.place(x=20, y=220)
 
     def logout(self):
         self.master.show_login_frame()
+
+    def getCourselist(self):
+        connection = sqlite3.connect("assignment3.db")
+        cur = connection.cursor()
+        print('last name is ', str(Lastname))
+        cur.execute("""SELECT CRN FROM Course WHERE professor = '%s'""" % Lastname)
+        query_CRN = cur.fetchall()
+        for i in query_CRN:
+            print(i) 
+        cur.close()
+        connection.close()
+
+
+    def getRoster(self):
+        connection = sqlite3.connect("assignment3.db")
+        cursor = connection.cursor()
+        cursor.execute("""SELECT CRN FROM Course WHERE professor = '%s'""" % Lastname)
+        query_CRN = cursor.fetchall()
+        cursor.execute("""SELECT NAME, SURNAME FROM STUDENT WHERE courseCRN = '%s'""" % query_CRN)
+        query_result = cursor.fetchall()
+        for i in query_result:
+            print(i) 
+        return query_result
+        cursor.close()
+        connection.close()
+
+    def printCourses(self):
+        connection = sqlite3.connect("assignment3.db")
+        cur = connection.cursor()
+        cur.execute("""SELECT * FROM Course""")
+        query_result = cur.fetchall()
+        for i in query_result:
+	        print(i)
+        cur.close()
+        connection.close()
 
 class StudentFrame(tk.Frame):
      def __init__(self, master):
@@ -299,13 +342,23 @@ class StudentFrame(tk.Frame):
         self.label = tk.Label(self, text="Main Menu", width=32, font=('Times',14), bg="white")
         self.label.place(x=20, y=40)
         
-        self.Search_button = tk.Button(self, text="Print Degree Audit", width=34, font=('Times',12), bg="black", fg="white", bd=0)
-        self.Search_button.place(x=20, y=100)
+        self.getcrnList_btn = tk.Button(self, text="Course List", width=34, font=('Times',12),  bg="white", fg="black", bd=0, command=self.Courses)
+        self.getcrnList_btn.place(x=20, y=80)
+
+        self.Search_button = tk.Button(self, text="Add Drop", width=34, font=('Times',12), bg="white", fg="black", bd=0, command=self.AddDrop)
+        self.Search_button.place(x=20, y=150)
+
+        self.Schedule_button = tk.Button(self, text="Add Drop", width=34, font=('Times',12), bg="white", fg="black", bd=0, command=self.Schedule)
+        self.Search_button.place(x=20, y=220)
 
         self.logout_button = tk.Button(self, text="Logout", font=('Times',12),  bg="red", fg="white", bd=0, command=self.logout)
         self.logout_button.place(x=285, y=10)
-     def PrintStudentAudit(self):
+     def Courses(self):
         print("Print self degree audit")
+     def AddDrop(self):
+        print('addDrop')
+     def Schedule(self):
+        print('Scedhule')
      def logout(self):
         self.master.show_login_frame()
 
