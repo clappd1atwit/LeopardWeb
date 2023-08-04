@@ -588,6 +588,26 @@ class LinkCourse(tk.Frame):
         self.Back_button = tk.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
         self.Back_button.place(x=285, y=30)
 
+        self.Cls_label = tk.Label(self, text="Update Professor", font=('Times',12), bg="white")
+        self.Cls_label.place(x=15, y=100)
+
+        self.CRN_label = tk.Label(self, text="Course CRN:", font=('Times',12), bg="white")
+        self.CRN_label.place(x=15, y=120)
+        self.CRN_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.CRN_Entry.place(x=75, y=120)
+
+        self.Name_label = tk.Label(self, text="Professor:", font=('Times',12), bg="white")
+        self.Name_label.place(x=15, y=150)
+        self.Name_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.Name_Entry.place(x=75, y=150)
+
+        self.Change_button = tk.Button(self, text="Commit Change", font=('Times',12),  bg="black", fg="white", bd=0, command=self.ChangeProf)
+        self.Change_button.place(x=15, y=400)
+
+     def ChangeCourse(self):
+         iCRN = int(self.CRN_Entry.get())
+         ProfName = self.Name_Entry.get()
+         cur.execute("""UPDATE Course SET professor = '%s' WHERE CRN = '%d'""" % (iCRN, ProfName))
      def Back(self):
         self.master.show_Admin_frame()
 
