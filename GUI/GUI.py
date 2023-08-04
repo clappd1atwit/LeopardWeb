@@ -507,6 +507,69 @@ class EditCourseCat(tk.Frame):
         self.Back_button = tk.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
         self.Back_button.place(x=285, y=30)
 
+        self.Cls_label = tk.Label(self, text="Add a Class", font=('Times',12), bg="white")
+        self.Cls_label.place(x=15, y=100)
+
+        self.CRN_label = tk.Label(self, text="CRN:", font=('Times',12), bg="white")
+        self.CRN_label.place(x=15, y=120)
+        self.CRN_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.CRN_Entry.place(x=75, y=120)
+
+        self.Name_label = tk.Label(self, text="Name:", font=('Times',12), bg="white")
+        self.Name_label.place(x=15, y=150)
+        self.Name_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.Name_Entry.place(x=75, y=150)
+
+        self.Dept_label = tk.Label(self, text="Department:", font=('Times',12), bg="white")
+        self.Dept_label.place(x=15, y=180)
+        self.Dept_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.Dept_Entry.place(x=75, y=180)
+
+        self.Time_label = tk.Label(self, text="Time:", font=('Times',12), bg="white")
+        self.Time_label.place(x=15, y=210)
+        self.Time_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.Time_Entry.place(x=75, y=210)
+
+        self.Day_label = tk.Label(self, text="Days:", font=('Times',12), bg="white")
+        self.Day_label.place(x=15, y=240)
+        self.Day_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.Day_Entry.place(x=75, y=240)
+
+        self.Semsester_label = tk.Label(self, text="Semsester:", font=('Times',12), bg="white")
+        self.Semsester_label.place(x=15, y=270)
+        self.Semsester_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.Semsester_Entry.place(x=75, y=270)
+
+        self.Year_label = tk.Label(self, text="Year:", font=('Times',12), bg="white")
+        self.Year_label.place(x=15, y=300)
+        self.Year_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.Year_Entry.place(x=75, y=300)
+
+        self.Credits_label = tk.Label(self, text="Credits:", font=('Times',12), bg="white")
+        self.Credits_label.place(x=15, y=330)
+        self.Credits_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.Credits_Entry.place(x=75, y=330)
+
+        self.Professor_label = tk.Label(self, text="Professor:", font=('Times',12), bg="white")
+        self.Professor_label.place(x=15, y=360)
+        self.Professor_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.Professor_Entry.place(x=75, y=360)
+
+        self.Add_button = tk.Button(self, text="Add Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.AddCourse)
+        self.Add_button.place(x=15, y=400)
+
+     def AddCourse(self):
+        intCRN =int(self.CRN_Entry.get())
+        sName = self.Name_Entry.get()
+        sDept = self.Dept_Entry.get()
+        sTime = self.Time_Entry.get() 
+        sDays = self.Day_Entry.get() 
+        sSemester = self.Semsester_Entry.get() 
+        intYear = int(self.Year_Entry.get()) 
+        intCredit = int(self.Credits_Entry.get()) 
+        sProf = self.Professor_Entry.get()
+        cur.execute("""INSERT INTO Course VALUES('%d','%s', '%s','%s', '%s', '%s', '%d', '%d', '%s')""" % (intCRN, sName, sDept, sTime, sDays, sSemester, intYear, intCredit, sProf))
+
      def Back(self):
         self.master.show_Admin_frame()
 
