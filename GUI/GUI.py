@@ -31,6 +31,10 @@ class MainApplication(tk.Tk):
         self.CourseList = CourseList(self)
         self.AddDrop_frame = AddDrop(self)
         self.Roster_frame = DispRoster(self)
+        self.CourseCat_frame = EditCourseCat(self)
+        self.SchoolRoster_frame = EditSchoolRoster(self)
+        self.LinkCourse_frame = LinkCourse(self)
+
         
         
         self.show_login_frame()
@@ -78,34 +82,35 @@ class MainApplication(tk.Tk):
         self.instructor_frame.place_forget()
         self.profile_frame.place_forget()
         self.CourseList.place_forget()
+        self.LinkCourse_frame.place_forget()
+        self.SchoolRoster_frame.place_forget()
+        self.CourseCat_frame.place_forget()
 
     def show_EditSchoolRosterPage(self):
         width_screen= self.winfo_screenwidth()
         height_screen= self.winfo_screenheight()
         self.login_frame.place_forget()
-        self.EditStudentDegreeAuditPage.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
+        self.SchoolRoster_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
         self.instructor_frame.place_forget()
         self.profile_frame.place_forget()
-        self.SearchStudentDegreeAuditPage.place_forget()
         self.AdminPage.place_forget()
 
     def show_LinkCoursePage(self):
         width_screen= self.winfo_screenwidth()
         height_screen= self.winfo_screenheight()
         self.login_frame.place_forget()
-        self.SearchStudentDegreeAuditPage.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
+        self.LinkCourse_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
         self.instructor_frame.place_forget()
         self.profile_frame.place_forget()
         self.AdminPage.place_forget()
 
-    def show_EditCourseCalalog(self):
+    def show_EditCourseCatalog(self):
         width_screen= self.winfo_screenwidth()
         height_screen= self.winfo_screenheight()
         self.login_frame.place_forget()
-        self.EditStudentDegreeAuditPage.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
+        self.CourseCat_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
         self.instructor_frame.place_forget()
         self.profile_frame.place_forget()
-        self.SearchStudentDegreeAuditPage.place_forget()
         self.AdminPage.place_forget()
 
 
@@ -242,7 +247,7 @@ class AdminPage(tk.Frame):
         self.LnkCourse_button.place(x=70, y=200)
     
     def Courses(self):
-        self.master.show_EditCourseCalalog()
+        self.master.show_EditCourseCatalog()
         
     def SchoolRoster(self):
         self.master.show_EditSchoolRosterPage()
@@ -495,6 +500,33 @@ class DispRoster(tk.Frame):
 
     def Back(self):
         self.master.show_instructor_frame()
+
+class EditCourseCat(tk.Frame):
+     def __init__(self, master):
+        super().__init__(master, width = 350, height = 500, bg="white")
+        self.Back_button = tk.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
+        self.Back_button.place(x=285, y=30)
+
+     def Back(self):
+        self.master.show_Admin_frame()
+
+class EditSchoolRoster(tk.Frame):
+     def __init__(self, master):
+        super().__init__(master, width = 350, height = 500, bg="white")
+        self.Back_button = tk.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
+        self.Back_button.place(x=285, y=30)
+
+     def Back(self):
+        self.master.show_Admin_frame()
+
+class LinkCourse(tk.Frame):
+     def __init__(self, master):
+        super().__init__(master, width = 350, height = 500, bg="white")
+        self.Back_button = tk.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
+        self.Back_button.place(x=285, y=30)
+
+     def Back(self):
+        self.master.show_Admin_frame()
 
 if __name__ == "__main__":
     app = MainApplication()
