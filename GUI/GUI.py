@@ -32,7 +32,8 @@ class MainApplication(tk.Tk):
         self.AddDrop_frame = AddDrop(self)
         self.Roster_frame = DispRoster(self)
         self.CourseCat_frame = EditCourseCat(self)
-        self.SchoolRoster_frame = EditSchoolRoster(self)
+        self.StudentRoster_frame = EditStudentRoster(self)
+        self.InstructorRoster_frame = EditStudentRoster(self)
         self.LinkCourse_frame = LinkCourse(self)
 
         
@@ -83,14 +84,24 @@ class MainApplication(tk.Tk):
         self.profile_frame.place_forget()
         self.CourseList.place_forget()
         self.LinkCourse_frame.place_forget()
-        self.SchoolRoster_frame.place_forget()
+        self.StudentRoster_frame.place_forget()
+        self.InstructorRoster_frame.place_forget()
         self.CourseCat_frame.place_forget()
 
-    def show_EditSchoolRosterPage(self):
+    def show_EditStudentRosterPage(self):
         width_screen= self.winfo_screenwidth()
         height_screen= self.winfo_screenheight()
         self.login_frame.place_forget()
-        self.SchoolRoster_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
+        self.StudentRoster_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
+        self.instructor_frame.place_forget()
+        self.profile_frame.place_forget()
+        self.AdminPage.place_forget()
+
+    def show_EditInstructorRosterPage(self):
+        width_screen= self.winfo_screenwidth()
+        height_screen= self.winfo_screenheight()
+        self.login_frame.place_forget()
+        self.InstructorRoster_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
         self.instructor_frame.place_forget()
         self.profile_frame.place_forget()
         self.AdminPage.place_forget()
@@ -573,11 +584,24 @@ class EditCourseCat(tk.Frame):
      def Back(self):
         self.master.show_Admin_frame()
 
-class EditSchoolRoster(tk.Frame):
+class EditStudentRoster(tk.Frame):
      def __init__(self, master):
         super().__init__(master, width = 350, height = 500, bg="white")
         self.Back_button = tk.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
         self.Back_button.place(x=285, y=30)
+
+
+
+     def Back(self):
+        self.master.show_Admin_frame()
+
+class EditInstructorRoster(tk.Frame):
+     def __init__(self, master):
+        super().__init__(master, width = 350, height = 500, bg="white")
+        self.Back_button = tk.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
+        self.Back_button.place(x=285, y=30)
+
+
 
      def Back(self):
         self.master.show_Admin_frame()
@@ -604,7 +628,7 @@ class LinkCourse(tk.Frame):
         self.Change_button = tk.Button(self, text="Commit Change", font=('Times',12),  bg="black", fg="white", bd=0, command=self.ChangeProf)
         self.Change_button.place(x=15, y=400)
 
-     def ChangeCourse(self):
+     def ChangeProf(self):
          iCRN = int(self.CRN_Entry.get())
          ProfName = self.Name_Entry.get()
          cur.execute("""UPDATE Course SET professor = '%s' WHERE CRN = '%d'""" % (iCRN, ProfName))
