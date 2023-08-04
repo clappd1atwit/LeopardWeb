@@ -8,7 +8,7 @@ import sqlite3
 import re
 
 page =1
-Lastname = ""
+Lastname = "Rawlins"
 Type = ""
 database = sqlite3.connect("assignment3.db") 
 cur = database.cursor()
@@ -21,7 +21,8 @@ class MainApplication(tk.Tk):
         height_screen= self.winfo_screenheight()
         self.geometry("%dx%d" % (width_screen, height_screen))
         self.iconphoto(False, PhotoImage(file = 'Images_for_Gui/images.png'))
-            
+        self.AddDrop_frame = AddDrop(self)
+        self.DispSchedule_frame = DispSchedule(self)
         self.login_frame = LoginFrame(self)
         self.instructor_frame = InstructorFrame(self)
         self.student_frame = StudentFrame(self)
@@ -29,6 +30,8 @@ class MainApplication(tk.Tk):
         self.profile_frame = ProfileFrame(self)
         self.CourseList = CourseList(self)
         self.AddDrop_frame = AddDrop(self)
+        self.Roster_frame = DispRoster(self)
+        
         
         self.show_login_frame()
         
@@ -52,20 +55,19 @@ class MainApplication(tk.Tk):
         self.student_frame.place_forget()
         self.CourseList.place_forget()
         self.DispSchedule_frame.place_forget()
+        self.Roster_frame.place_forget()
 
     def show_student_frame(self):
         width_screen= self.winfo_screenwidth()
         height_screen= self.winfo_screenheight()
-        self.DispSchedule_frame = DispSchedule(self)
         self.login_frame.place_forget()
         self.student_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
         self.profile_frame.place_forget()
         self.instructor_frame.place_forget()
         self.CourseList.place_forget()
         self.AdminPage.place_forget()
-        self.DispSchedule_frame.place_forget()
         self.AddDrop_frame.place_forget()
-        self.AddDrop_frame = AddDrop(self)
+        
         
 
     def show_Admin_frame(self):
@@ -108,10 +110,11 @@ class MainApplication(tk.Tk):
 
 
     def show_DispRoster(self):
+        self.Roster_frame = DispRoster(self)
         width_screen= self.winfo_screenwidth()
         height_screen= self.winfo_screenheight()
         self.login_frame.place_forget()
-        self.EditStudentDegreeAuditPage.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
+        self.Roster_frame.place(x=((width_screen/2) -200),y=((height_screen/2) -380))
         self.instructor_frame.place_forget()
         self.profile_frame.place_forget()
         self.AdminPage.place_forget()
@@ -126,6 +129,7 @@ class MainApplication(tk.Tk):
         self.AdminPage.place_forget()
 
     def show_DispSchedule(self):
+        self.DispSchedule_frame = DispSchedule(self)
         width_screen= self.winfo_screenwidth()
         height_screen= self.winfo_screenheight()
         self.login_frame.place_forget()
@@ -135,6 +139,7 @@ class MainApplication(tk.Tk):
         self.AdminPage.place_forget()
 
     def show_EditAddDrop(self):
+        self.AddDrop_frame = AddDrop(self)
         width_screen= self.winfo_screenwidth()
         height_screen= self.winfo_screenheight()
         self.login_frame.place_forget()
@@ -399,15 +404,17 @@ class CourseList(tk.Frame):
 class DispSchedule(tk.Frame):
     def __init__(self, master):
         super().__init__(master, width = 350, height = 500, bg="white")
+        cur.execute("""SELECT courseCRN FROM 'STUDENT' WHERE ID = 10001""")
+        query_result = cur.fetchone()
         self.Back_button = tk.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
         self.Back_button.place(x=285, y=30)
         if Type == 'Instructor':
             cur.execute("""SELECT courseCRN FROM 'INSTRUCTOR' WHERE SURNAME = '%s'""" % Lastname)
             query_result = cur.fetchone()
-        else:
+        elif Type == 'STUDENT':
             cur.execute("""SELECT courseCRN FROM 'STUDENT' WHERE SURNAME = '%s'""" % Lastname)
             query_result = cur.fetchone()
-            query_int = int(query_result[0])
+        query_int = int(query_result[0])
         cur.execute("""SELECT * FROM Course WHERE CRN = '%d'""" % int(query_int))
         query_result = cur.fetchall()
         self.SCH_label = tk.Label(self, text=str(query_result), font=('Times',12), bg="white")
@@ -473,7 +480,21 @@ class AddDrop(tk.Frame):
                 query_str = query_str[:-1]
             cur.execute("""UPDATE STUDENT SET courseCRN = '%s' WHERE SURNAME = '%s'""" % (query_str, Lastname))
 
+class DispRoster(tk.Frame):
+    def __init__(self, master):
+        super().__init__(master, width = 350, height = 500, bg="white")
+        self.Back_button = tk.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
+        self.Back_button.place(x=285, y=30)
+        cur.execute("""SELECT CRN FROM Course WHERE professor = '%s'""" % Lastname)
+        query_CRN = cur.fetchone()
+        string_CRN = str(query_CRN[0])
+        cur.execute("""SELECT NAME, SURNAME FROM STUDENT WHERE courseCRN = '%s'""" % string_CRN)
+        query_result = cur.fetchall()
+        self.RSTR_label = tk.Label(self, text=str(query_result), font=('Times',12), bg="white")
+        self.RSTR_label.place(x=15, y=130)
 
+    def Back(self):
+        self.master.show_instructor_frame()
 
 if __name__ == "__main__":
     app = MainApplication()

@@ -343,7 +343,7 @@ while run: #Run as long as you are signed in (Liam)
 
 
 # Student.removecourse("Issac Newton", "Newton")
-
+cur.execute("""UPDATE Course SET professor = 'Patrick' WHERE CRN = 12865""")
 database.commit() #Close and exit db
   
 database.close()
