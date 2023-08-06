@@ -43,7 +43,6 @@ class MainApplication(tk.Tk):
         self.StudentRoster_frame = EditStudentRoster(self)
         self.InstructorRoster_frame = EditStudentRoster(self)
         self.LinkCourse_frame = LinkCourse(self)
-
         
         
         self.show_login_frame()
@@ -82,6 +81,7 @@ class MainApplication(tk.Tk):
         self.CourseList.place_forget()
         self.AdminPage.place_forget()
         self.AddDrop_frame.place_forget()
+        self.DispSchedule_frame.place_forget()
         
         
 
@@ -250,27 +250,33 @@ class LoginFrame(tk.Frame):
     
 class AdminPage(tk.Frame):
     def __init__(self, master):
-        super().__init__(master, width = 600, height = 500, bg="white")
+        super().__init__(master, width = 350, height = 500, bg="white")
         self.label = tk.Label(self, text="Welcome Admin", width=32, font=('Times',14), bg="white")
-        self.label.place(x=130, y=40)
+        self.label.place(x=20, y=40)
 
         self.logout_button = tk.Button(self, text="Logout", font=('Times',12),  bg="red", fg="white", bd=0, command=self.logout)
-        self.logout_button.place(x=535, y=10)
+        self.logout_button.place(x=285, y=10)
         
         self.Course_button = tk.Button(self, text="Edit Semester Catalog", bg="black", fg="white", width=25, font=('Times',12), bd=0, command=self.Courses)
-        self.Course_button.place(x=180, y=120)
+        self.Course_button.place(x=70, y=120)
         
-        self.EditRoster_button = tk.Button(self, text="Edit School Roster", bg="black", fg="white", width=25, font=('Times',12), bd=0, command=self.SchoolRoster)
-        self.EditRoster_button.place(x=180, y=160)
+        self.EditRoster_button = tk.Button(self, text="Edit Instructor Roster", bg="black", fg="white", width=25, font=('Times',12), bd=0, command=self.InstuctorRoster)
+        self.EditRoster_button.place(x=70, y=160)
+
+        self.EditRoster_button = tk.Button(self, text="Edit Student Roster", bg="black", fg="white", width=25, font=('Times',12), bd=0, command=self.StudentRoster)
+        self.EditRoster_button.place(x=70, y=200)
 
         self.LnkCourse_button = tk.Button(self, text="Link Course", bg="black", fg="white", width=25, font=('Times',12), bd=0, command=self.LinkCourse)
-        self.LnkCourse_button.place(x=180, y=200)
+        self.LnkCourse_button.place(x=70, y=240)
     
     def Courses(self):
         self.master.show_EditCourseCatalog()
         
-    def SchoolRoster(self):
-        self.master.show_EditSchoolRosterPage()
+    def InstuctorRoster(self):
+        self.master.show_EditInstructorRosterPage()
+
+    def StudentRoster(self):
+        self.master.show_EditStudentRosterPage()
 
     def LinkCourse(self):
         self.master.show_LinkCoursePage()
@@ -502,11 +508,11 @@ class AddDrop(tk.Frame):
             exit
         else: 
             query_str = query_str.replace(str(self.CRN_Entry.get()),"")
-            query_str = re.sub(r',+,', ' ,', query_str) #No work??
+            query_str = re.sub(', ,', ', ', query_str) #No work??
 
             #This no work too
-            if query_str.endswith(','):
-                query_str = query_str[:-1]
+            if query_str.endswith(', '):
+                query_str = query_str[:-2]
             cur.execute("""UPDATE STUDENT SET courseCRN = '%s' WHERE SURNAME = '%s'""" % (query_str, Lastname))
 
 class DispRoster(tk.Frame):
