@@ -18,7 +18,7 @@ cur.execute("""CREATE TABLE if not exists Course(
 );""")#Created Course table if not already made
 
 #Needs to be run first time to setup db
-cur.execute("""UPDATE Course SET CRN = '13645' WHERE CRN = '3645'""")
+cur.execute("""UPDATE Course SET CRN = '%d' WHERE CRN = '%d'""" % (13648, 3648))
 #cur.execute("""ALTER TABLE STUDENT ADD COLUMN courseCRN""")
 #cur.execute("""ALTER TABLE INSTRUCTOR DROP COLUMN courseCRN""")
 #cur.execute("""ALTER TABLE INSTRUCTOR ADD COLUMN courseCRN""")

@@ -42,7 +42,8 @@ class MainApplication(tk.Tk):
         self.CourseCat_frame = EditCourseCat(self)
         self.StudentRoster_frame = EditStudentRoster(self)
         self.InstructorRoster_frame = EditInstructorRoster(self)
-        self.LinkCourse_frame = LinkCourse(self)
+        self.LinkProfCourse_frame = LinkProfCourse(self)
+        self.LinkStudCourse_frame = LinkStudCourse(self)
         
         
         self.show_login_frame()
@@ -93,7 +94,8 @@ class MainApplication(tk.Tk):
         self.instructor_frame.place_forget()
         self.profile_frame.place_forget()
         self.CourseList.place_forget()
-        self.LinkCourse_frame.place_forget()
+        self.LinkProfCourse_frame.place_forget()
+        self.LinkStudCourse_frame.place_forget()
         self.StudentRoster_frame.place_forget()
         self.InstructorRoster_frame.place_forget()
         self.CourseCat_frame.place_forget()
@@ -116,11 +118,20 @@ class MainApplication(tk.Tk):
         self.profile_frame.place_forget()
         self.AdminPage.place_forget()
 
-    def show_LinkCoursePage(self):
+    def show_LinkProfCoursePage(self):
         width_screen= self.winfo_screenwidth()
         height_screen= self.winfo_screenheight()
         self.login_frame.place_forget()
-        self.LinkCourse_frame.place(x=((width_screen/2) -350),y=((height_screen/2) -300))
+        self.LinkProfCourse_frame.place(x=((width_screen/2) -350),y=((height_screen/2) -300))
+        self.instructor_frame.place_forget()
+        self.profile_frame.place_forget()
+        self.AdminPage.place_forget()
+
+    def show_LinkStudCoursePage(self):
+        width_screen= self.winfo_screenwidth()
+        height_screen= self.winfo_screenheight()
+        self.login_frame.place_forget()
+        self.LinkStudCourse_frame.place(x=((width_screen/2) -350),y=((height_screen/2) -300))
         self.instructor_frame.place_forget()
         self.profile_frame.place_forget()
         self.AdminPage.place_forget()
@@ -266,11 +277,14 @@ class AdminPage(tk.Frame):
         self.EditRoster_button = tk.Button(self, text="Edit Student Roster", bg="white", fg="black", width=25, font=('Times',12), bd=0, command=self.StudentRoster)
         self.EditRoster_button.place(x=190, y=200)
 
-        self.LnkCourse_button = tk.Button(self, text="Link Course", bg="white", fg="black", width=25, font=('Times',12), bd=0, command=self.LinkCourse)
-        self.LnkCourse_button.place(x=190, y=240)
+        self.LnkProfCourse_button = tk.Button(self, text="Link Professor Course", bg="white", fg="black", width=25, font=('Times',12), bd=0, command=self.LinkProfCourse)
+        self.LnkProfCourse_button.place(x=190, y=240)
+
+        self.LnkStudCourse_button = tk.Button(self, text="Edit Student Courses", bg="white", fg="black", width=25, font=('Times',12), bd=0, command=self.LinkStudCourse)
+        self.LnkStudCourse_button.place(x=190, y=280)
 
         self.getRoster_btn = tk.Button(self, text="Course Search", font=('Times',12),  bg="white", fg="black", bd=0, command=self.printCourses)
-        self.getRoster_btn.place(x=255, y=280)
+        self.getRoster_btn.place(x=255, y=320)
     
     def Courses(self):
         self.master.show_EditCourseCatalog()
@@ -281,8 +295,11 @@ class AdminPage(tk.Frame):
     def StudentRoster(self):
         self.master.show_EditStudentRosterPage()
 
-    def LinkCourse(self):
-        self.master.show_LinkCoursePage()
+    def LinkProfCourse(self):
+        self.master.show_LinkProfCoursePage()
+
+    def LinkStudCourse(self):
+        self.master.show_LinkStudCoursePage()
 
     def printCourses(self):
         self.master.show_CourseList()
@@ -818,7 +835,7 @@ class EditInstructorRoster(tk.Frame):
          self.Course_Label = tk.Label(self, text = str(temp), font=('Times',12),  bg="white", fg="black", bd=0)
          self.Course_Label.place(x=380, y=70)
 
-class LinkCourse(tk.Frame):
+class LinkProfCourse(tk.Frame):
      def __init__(self, master):
         super().__init__(master, width = 600, height = 500, bg="white")
         self.Back_button = tk.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
@@ -847,6 +864,54 @@ class LinkCourse(tk.Frame):
         self.rmCRN_label.place(x=50, y=280)
         self.rmCRN_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
         self.rmCRN_Entry.place(x=150, y=280)
+
+        self.Change_button = tk.Button(self, text="Commit Change", font=('Times',12),  bg="black", fg="white", bd=0, command=self.ChangeProf)
+        self.Change_button.place(x=50, y=310)
+
+     def ChangeProf(self):
+         iCRN = int(self.CRN_Entry.get())
+         ProfName = self.Name_Entry.get()
+         cur.execute("""UPDATE Course SET professor = '%s' WHERE CRN = '%d'""" % (iCRN, ProfName))
+     def RemoveProf(self):
+         iCRN = int(self.rmCRN_Entry.get())
+         cur.execute("""UPDATE Course SET professor = NULL WHERE CRN = '%d'""" % iCRN)
+     def Back(self):
+        self.master.show_Admin_frame()
+
+class LinkStudCourse(tk.Frame):
+     def __init__(self, master):
+        super().__init__(master, width = 600, height = 500, bg="white")
+        self.Back_button = tk.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
+        self.Back_button.place(x=535, y=30)
+
+        self.Cls_label = tk.Label(self, text="Add Studnet to Course:", font=('Times',18), bg="white")
+        self.Cls_label.place(x=50, y=100)
+
+        self.CRN_label = tk.Label(self, text="Course CRN:", font=('Times',12), bg="white")
+        self.CRN_label.place(x=50, y=140)
+        self.CRN_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.CRN_Entry.place(x=150, y=140)
+
+        self.Name_label = tk.Label(self, text="Student:", font=('Times',12), bg="white")
+        self.Name_label.place(x=50, y=170)
+        self.Name_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.Name_Entry.place(x=150, y=170)
+
+        self.Change_button = tk.Button(self, text="Commit Change", font=('Times',12),  bg="black", fg="white", bd=0, command=self.ChangeProf)
+        self.Change_button.place(x=50, y=210)
+
+        self.Cls_label = tk.Label(self, text="Remove Student From Course:", font=('Times',18), bg="white")
+        self.Cls_label.place(x=50, y=250)
+
+        self.rmCRN_label = tk.Label(self, text="Course CRN:", font=('Times',12), bg="white")
+        self.rmCRN_label.place(x=50, y=280)
+        self.rmCRN_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.rmCRN_Entry.place(x=150, y=280)
+
+        self.Name_label = tk.Label(self, text="Student:", font=('Times',12), bg="white")
+        self.Name_label.place(x=50, y=170)
+        self.Name_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.Name_Entry.place(x=150, y=170)
 
         self.Change_button = tk.Button(self, text="Commit Change", font=('Times',12),  bg="black", fg="white", bd=0, command=self.ChangeProf)
         self.Change_button.place(x=50, y=310)
