@@ -398,10 +398,12 @@ class CourseList(tk.Frame):
             self.master.show_instructor_frame()
         else:
             self.master.show_student_frame()
-
+            
     def Search(self):
         parameter = self.SearchPara_Entry.get()
         if self.chk_CRN.get(): 
+            if not isinstance(self.SearchPara_Entry.get(), int):
+                parameter = -1
             self.Course_Label.place_forget()
             cur.execute("""SELECT * FROM Course WHERE CRN = '%d'""" % int(parameter))
             query_result = cur.fetchall()
@@ -437,6 +439,15 @@ class CourseList(tk.Frame):
                 temp = str(temp) + re.sub(r"[\'()]", '', str(i)) + "\n" 
             self.Course_Label = tk.Label(self, text = str(temp), font=('Times',12),  bg="white", fg="black", bd=0)
             self.Course_Label.place(x=15, y=220)
+        if self.chk_Day.get() == 0 and self.chk_Time.get() == 0 and self.chk_DEPT.get() == 0 and self.chk_CRN.get() == 0:
+            self.Course_Label.place_forget()
+            cur.execute("""SELECT * FROM Course""")
+            query_result = cur.fetchall()
+            temp = ""
+            for i in query_result:
+                temp = str(temp) + re.sub(r"[\'()]", '', str(i)) + "\n" 
+            self.Course_Label = tk.Label(self, text = str(temp), font=('Times',12),  bg="white", fg="black", bd=0)
+            self.Course_Label.place(x=30, y=220)
 
 class DispSchedule(tk.Frame):
     def __init__(self, master):
