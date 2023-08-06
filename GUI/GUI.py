@@ -909,12 +909,12 @@ class LinkStudCourse(tk.Frame):
         self.rmCRN_Entry.place(x=150, y=280)
 
         self.Name_label = tk.Label(self, text="Student:", font=('Times',12), bg="white")
-        self.Name_label.place(x=50, y=170)
+        self.Name_label.place(x=50, y=310)
         self.Name_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
-        self.Name_Entry.place(x=150, y=170)
+        self.Name_Entry.place(x=150, y=310)
 
         self.Change_button = tk.Button(self, text="Commit Change", font=('Times',12),  bg="black", fg="white", bd=0, command=self.ChangeProf)
-        self.Change_button.place(x=50, y=310)
+        self.Change_button.place(x=50, y=350)
 
      def ChangeProf(self):
          iCRN = int(self.CRN_Entry.get())
