@@ -17,6 +17,16 @@ cur.execute("""CREATE TABLE if not exists Course(
     professor text
 );""")#Created Course table if not already made
 
+#Needs to be run first time to setup db
+cur.execute("""UPDATE Course SET CRN = '13645' WHERE CRN = '3645'""")
+#cur.execute("""ALTER TABLE STUDENT ADD COLUMN courseCRN""")
+#cur.execute("""ALTER TABLE INSTRUCTOR DROP COLUMN courseCRN""")
+#cur.execute("""ALTER TABLE INSTRUCTOR ADD COLUMN courseCRN""")
+# cur.execute("INSERT INTO Course VALUES(34285, 'Advanced Digital', 'BSCO', '12:30', 'MF', 'Summer', 2023, 4, 'Pilin');")
+# cur.execute("INSERT INTO Course VALUES(33950, 'Applied Programming', 'BSCO', '8:00', 'MTR', 'Summer', 2023, 3, 'Rawlins');")
+# cur.execute("INSERT INTO Course VALUES(12865, 'Econ', 'HUSS', '8:00', 'MTR', 'Summer', 2023, 4, 'Cort');")
+# cur.execute("INSERT INTO Course VALUES(03648, 'Materials', 'BSME', '8:00', 'MTR', 'Summer', 2023, 3, 'Bernoulli');")
+# cur.execute("INSERT INTO Course VALUES(33957, 'Computer Network', 'BSCO', '11:00', 'MF', 'Summer', 2023, 4, 'Hasebbo');")
 
 
 class User:

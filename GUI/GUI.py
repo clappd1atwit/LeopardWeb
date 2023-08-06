@@ -840,10 +840,24 @@ class LinkCourse(tk.Frame):
         self.Change_button = tk.Button(self, text="Commit Change", font=('Times',12),  bg="black", fg="white", bd=0, command=self.ChangeProf)
         self.Change_button.place(x=50, y=210)
 
+        self.Cls_label = tk.Label(self, text="Remove Professor:", font=('Times',18), bg="white")
+        self.Cls_label.place(x=50, y=250)
+
+        self.rmCRN_label = tk.Label(self, text="Course CRN:", font=('Times',12), bg="white")
+        self.rmCRN_label.place(x=50, y=280)
+        self.rmCRN_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.rmCRN_Entry.place(x=150, y=280)
+
+        self.Change_button = tk.Button(self, text="Commit Change", font=('Times',12),  bg="black", fg="white", bd=0, command=self.ChangeProf)
+        self.Change_button.place(x=50, y=310)
+
      def ChangeProf(self):
          iCRN = int(self.CRN_Entry.get())
          ProfName = self.Name_Entry.get()
          cur.execute("""UPDATE Course SET professor = '%s' WHERE CRN = '%d'""" % (iCRN, ProfName))
+     def RemoveProf(self):
+         iCRN = int(self.rmCRN_Entry.get())
+         cur.execute("""UPDATE Course SET professor = NULL WHERE CRN = '%d'""" % iCRN)
      def Back(self):
         self.master.show_Admin_frame()
 
