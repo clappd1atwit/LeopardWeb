@@ -590,6 +590,17 @@ class EditCourseCat(tk.Frame):
         self.Add_button = tk.Button(self, text="Add Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.AddCourse)
         self.Add_button.place(x=50, y=400)
 
+        self.Remove_label = tk.Label(self, text="Course CRN:", font=('Times',12), bg="white")
+        self.Remove_label.place(x=50, y=430)
+        self.Remove_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.Remove_Entry.place(x=150, y=430)
+
+        self.Add_button = tk.Button(self, text="Add Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.AddCourse)
+        self.Add_button.place(x=50, y=400)
+
+        self.Remove_button = tk.Button(self, text="Remove Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.RemoveCourse)
+        self.Remove_button.place(x=50, y=460)
+
      def AddCourse(self):
         intCRN =int(self.CRN_Entry.get())
         sName = self.Name_Entry.get()
@@ -602,6 +613,9 @@ class EditCourseCat(tk.Frame):
         sProf = self.Professor_Entry.get()
         cur.execute("""INSERT INTO Course VALUES('%d','%s', '%s','%s', '%s', '%s', '%d', '%d', '%s')""" % (intCRN, sName, sDept, sTime, sDays, sSemester, intYear, intCredit, sProf))
 
+     def RemoveCourse(self):
+         cur.execute("""DELETE FROM Course WHERE CRN = '%d'""" % int(self.Remove_Entry.get()))
+        
      def Back(self):
         self.master.show_Admin_frame()
 
@@ -619,6 +633,8 @@ class EditStudentRoster(tk.Frame):
             temp = str(temp) + str(i) + "\n" 
         self.Course_Label = tk.Label(self, text = str(temp), font=('Times',12),  bg="white", fg="black", bd=0)
         self.Course_Label.place(x=15, y=220)
+
+
 
      def Back(self):
         self.master.show_Admin_frame()
