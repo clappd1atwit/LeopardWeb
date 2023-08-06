@@ -608,10 +608,17 @@ class EditCourseCat(tk.Frame):
 class EditStudentRoster(tk.Frame):
      def __init__(self, master):
         super().__init__(master, width = 600, height = 500, bg="white")
+        temp = ""
         self.Back_button = tk.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
         self.Back_button.place(x=535, y=30)
 
+        cur.execute("""SELECT ID, NAME, SURNAME FROM STUDENT""")
+        student_name = cur.fetchall()
 
+        for i in student_name:
+            temp = str(temp) + str(i) + "\n" 
+        self.Course_Label = tk.Label(self, text = str(temp), font=('Times',12),  bg="white", fg="black", bd=0)
+        self.Course_Label.place(x=15, y=220)
 
      def Back(self):
         self.master.show_Admin_frame()
