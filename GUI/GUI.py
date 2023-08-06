@@ -555,14 +555,9 @@ class EditCourseCat(tk.Frame):
         super().__init__(master, width = 600, height = 500, bg="white")
         self.Back_button = tk.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
         self.Back_button.place(x=535, y=30)
-
-<<<<<<< HEAD
+        
         self.Cls_label = tk.Label(self, text="Add a Class:", font=('Times',16), bg="white")
         self.Cls_label.place(x=50, y=40)
-=======
-        self.Cls_label = tk.Label(self, text="Add a Class", font=('Times',12), bg="white")
-        self.Cls_label.place(x=50, y=90)
->>>>>>> e79ab4835dfe51730a9df5fa8512422e42354329
 
         self.CRN_label = tk.Label(self, text="CRN:", font=('Times',12), bg="white")
         self.CRN_label.place(x=50, y=70)
@@ -654,12 +649,58 @@ class EditStudentRoster(tk.Frame):
         for i in student_name:
             temp = str(temp) + re.sub(r"[\'()]", '', str(i)) + "\n" 
         self.Course_Label = tk.Label(self, text = str(temp), font=('Times',12),  bg="white", fg="black", bd=0)
-        self.Course_Label.place(x=15, y=220)
+        self.Course_Label.place(x=15, y=280)
 
+        self.STD_label = tk.Label(self, text="Add a Student:", font=('Times',16), bg="white")
+        self.STD_label.place(x=50, y=40)
 
+        self.ID_label = tk.Label(self, text="Stduent ID:", font=('Times',12), bg="white")
+        self.ID_label.place(x=50, y=70)
+        self.ID_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.ID_Entry.place(x=150, y=70)
+
+        self.Name_label = tk.Label(self, text="Name:", font=('Times',12), bg="white")
+        self.Name_label.place(x=50, y=100)
+        self.Name_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.Name_Entry.place(x=150, y=100)
+
+        self.Surname_label = tk.Label(self, text="Surname:", font=('Times',12), bg="white")
+        self.Surname_label.place(x=50, y=130)
+        self.Surname_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.Surname_Entry.place(x=150, y=130)
+
+        self.Year_label = tk.Label(self, text="Grad Year:", font=('Times',12), bg="white")
+        self.Year_label.place(x=50, y=160)
+        self.Year_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.Year_Entry.place(x=150, y=160)
+
+        self.Major_label = tk.Label(self, text="Major:", font=('Times',12), bg="white")
+        self.Major_label.place(x=50, y=190)
+        self.Major_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.Major_Entry.place(x=150, y=190)
+
+        self.Email_label = tk.Label(self, text="Email:", font=('Times',12), bg="white")
+        self.Email_label.place(x=50, y=220)
+        self.Email_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.Email_Entry.place(x=150, y=220)
+
+        self.AddSTD_button = tk.Button(self, text="Add Student", font=('Times',12),  bg="black", fg="white", bd=0, command=self.AddStudent)
+        self.AddSTD_button.place(x=50, y=250)
 
      def Back(self):
         self.master.show_Admin_frame()
+
+     def AddStudent(self):
+         self.Course_Label.place_forget()
+         intID = int(self.ID_Entry.get())
+         cur.execute("""INSERT INTO STUDENT VALUES('%d','%s', '%s', '%d', '%s', '%s', '%s')""" % (intID, self.Name_Entry.get(), self.Surname_Entry.get(), int(self.Year_Entry.get()), self.Major_Entry.get(), self.Email_Entry.get(), NULL))
+         cur.execute("""SELECT ID, NAME, SURNAME FROM STUDENT""")
+         student_name = cur.fetchall()
+         temp = ""
+         for i in student_name:
+            temp = str(temp) + re.sub(r"[\'()]", '', str(i)) + "\n" 
+         self.Course_Label = tk.Label(self, text = str(temp), font=('Times',12),  bg="white", fg="black", bd=0)
+         self.Course_Label.place(x=15, y=280)
 
 class EditInstructorRoster(tk.Frame):
      def __init__(self, master):
