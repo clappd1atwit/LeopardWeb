@@ -268,6 +268,9 @@ class AdminPage(tk.Frame):
 
         self.LnkCourse_button = tk.Button(self, text="Link Course", bg="white", fg="black", width=25, font=('Times',12), bd=0, command=self.LinkCourse)
         self.LnkCourse_button.place(x=190, y=240)
+
+        self.getRoster_btn = tk.Button(self, text="Course Search", font=('Times',12),  bg="white", fg="black", bd=0, command=self.printCourses)
+        self.getRoster_btn.place(x=190, y=280)
     
     def Courses(self):
         self.master.show_EditCourseCatalog()
@@ -280,6 +283,9 @@ class AdminPage(tk.Frame):
 
     def LinkCourse(self):
         self.master.show_LinkCoursePage()
+
+    def printCourses(self):
+        self.master.show_CourseList()
 
     def logout(self):
         self.master.show_login_frame()
@@ -539,8 +545,13 @@ class EditCourseCat(tk.Frame):
         self.Back_button = tk.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
         self.Back_button.place(x=535, y=30)
 
+<<<<<<< HEAD
         self.Cls_label = tk.Label(self, text="Add a Class:", font=('Times',16), bg="white")
         self.Cls_label.place(x=50, y=40)
+=======
+        self.Cls_label = tk.Label(self, text="Add a Class", font=('Times',12), bg="white")
+        self.Cls_label.place(x=50, y=90)
+>>>>>>> e79ab4835dfe51730a9df5fa8512422e42354329
 
         self.CRN_label = tk.Label(self, text="CRN:", font=('Times',12), bg="white")
         self.CRN_label.place(x=50, y=70)
