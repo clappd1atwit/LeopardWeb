@@ -41,7 +41,7 @@ class MainApplication(tk.Tk):
         self.Roster_frame = DispRoster(self)
         self.CourseCat_frame = EditCourseCat(self)
         self.StudentRoster_frame = EditStudentRoster(self)
-        self.InstructorRoster_frame = EditStudentRoster(self)
+        self.InstructorRoster_frame = EditInstructorRoster(self)
         self.LinkCourse_frame = LinkCourse(self)
         
         
@@ -690,10 +690,10 @@ class EditStudentRoster(tk.Frame):
         self.STD_label = tk.Label(self, text="Remove Student:", font=('Times',16), bg="white")
         self.STD_label.place(x=30, y=290)
         
-        self.rmCRN_label = tk.Label(self, text="Email:", font=('Times',12), bg="white")
-        self.rmCRN_label.place(x=30, y=320)
-        self.rmCRN_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=24,font=('Times',14), bg="white")
-        self.rmCRN_Entry.place(x=130, y=320)
+        self.rmID_label = tk.Label(self, text="ID:", font=('Times',12), bg="white")
+        self.rmID_label.place(x=30, y=320)
+        self.rmID_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=24,font=('Times',14), bg="white")
+        self.rmID_Entry.place(x=130, y=320)
 
         self.rmSTD_button = tk.Button(self, text="Remove Student", font=('Times',12),  bg="black", fg="white", bd=0, command=self.RemoveStudent)
         self.rmSTD_button.place(x=30, y=350)
@@ -715,7 +715,7 @@ class EditStudentRoster(tk.Frame):
      
      def RemoveStudent(self):
          self.Course_Label.place_forget()
-         intID = int(self.rmCRN_Entry.get())
+         intID = int(self.rmID_Entry.get())
          cur.execute("""DELETE FROM STUDENT WHERE ID = '%d'""" % intID)
          cur.execute("""SELECT ID, NAME, SURNAME FROM STUDENT""")
          student_name = cur.fetchall()
@@ -731,10 +731,92 @@ class EditInstructorRoster(tk.Frame):
         self.Back_button = tk.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
         self.Back_button.place(x=535, y=30)
 
+        cur.execute("""SELECT ID, NAME, SURNAME FROM INSTRUCTOR""")
+        student_name = cur.fetchall()
+        temp = ""
+        for i in student_name:
+            temp = str(temp) + re.sub(r"[\'()]", '', str(i)) + "\n" 
+        self.Course_Label = tk.Label(self, text = str(temp), font=('Times',12),  bg="white", fg="black", bd=0)
+        self.Course_Label.place(x=390, y=70)
 
+        self.STD_label = tk.Label(self, text="Add a Instructor:", font=('Times',16), bg="white")
+        self.STD_label.place(x=30, y=40)
+
+        self.ID_label = tk.Label(self, text="Instructor ID:", font=('Times',12), bg="white")
+        self.ID_label.place(x=30, y=70)
+        self.ID_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=24,font=('Times',14), bg="white")
+        self.ID_Entry.place(x=130, y=70)
+
+        self.Name_label = tk.Label(self, text="Name:", font=('Times',12), bg="white")
+        self.Name_label.place(x=30, y=100)
+        self.Name_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=24,font=('Times',14), bg="white")
+        self.Name_Entry.place(x=130, y=100)
+
+        self.Surname_label = tk.Label(self, text="Surname:", font=('Times',12), bg="white")
+        self.Surname_label.place(x=30, y=130)
+        self.Surname_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=24,font=('Times',14), bg="white")
+        self.Surname_Entry.place(x=130, y=130)
+
+        self.Title_label = tk.Label(self, text="Title:", font=('Times',12), bg="white")
+        self.Title_label.place(x=30, y=160)
+        self.Title_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=24,font=('Times',14), bg="white")
+        self.Title_Entry.place(x=130, y=160)
+
+        self.Year_label = tk.Label(self, text="Year Hired:", font=('Times',12), bg="white")
+        self.Year_label.place(x=30, y=190)
+        self.Year_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=24,font=('Times',14), bg="white")
+        self.Year_Entry.place(x=130, y=190)
+
+        self.Dept_label = tk.Label(self, text="Department:", font=('Times',12), bg="white")
+        self.Dept_label.place(x=30, y=220)
+        self.Dept_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=24,font=('Times',14), bg="white")
+        self.Dept_Entry.place(x=130, y=220)
+
+        self.Email_label = tk.Label(self, text="Email:", font=('Times',12), bg="white")
+        self.Email_label.place(x=30, y=250)
+        self.Email_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=24,font=('Times',14), bg="white")
+        self.Email_Entry.place(x=130, y=250)
+
+        self.AddIns_button = tk.Button(self, text="Add Instructor", font=('Times',12),  bg="black", fg="white", bd=0, command=self.AddStudent)
+        self.AddIns_button.place(x=30, y=280)
+
+        self.Ins_label = tk.Label(self, text="Remove Instructor:", font=('Times',16), bg="white")
+        self.Ins_label.place(x=30, y=320)
+        
+        self.rmCRN_label = tk.Label(self, text="ID:", font=('Times',12), bg="white")
+        self.rmCRN_label.place(x=30, y=350)
+        self.rmCRN_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=24,font=('Times',14), bg="white")
+        self.rmCRN_Entry.place(x=130, y=350)
+
+        self.rmSTD_button = tk.Button(self, text="Remove Instructor", font=('Times',12),  bg="black", fg="white", bd=0, command=self.RemoveStudent)
+        self.rmSTD_button.place(x=30, y=380)
 
      def Back(self):
         self.master.show_Admin_frame()
+
+     def AddStudent(self):
+         self.Course_Label.place_forget()
+         intID = int(self.ID_Entry.get())
+         cur.execute("""INSERT INTO INSTRUCTOR VALUES('%d','%s', '%s', '%s', '%d', '%s', '%s')""" % (intID, self.Name_Entry.get(), self.Surname_Entry.get(), self.Title_Entry.get(), int(self.Year_Entry.get()), self.Dept_Entry.get(), self.Email_Entry.get()))
+         cur.execute("""SELECT ID, NAME, SURNAME FROM INSTRUCTOR""")
+         student_name = cur.fetchall()
+         temp = ""
+         for i in student_name:
+            temp = str(temp) + re.sub(r"[\'()]", '', str(i)) + "\n" 
+         self.Course_Label = tk.Label(self, text = str(temp), font=('Times',12),  bg="white", fg="black", bd=0)
+         self.Course_Label.place(x=535, y=30)
+     
+     def RemoveStudent(self):
+         self.Course_Label.place_forget()
+         intID = int(self.rmCRN_Entry.get())
+         cur.execute("""DELETE FROM INSTRUCTOR WHERE ID = '%d'""" % intID)
+         cur.execute("""SELECT ID, NAME, SURNAME FROM INSTRUCTOR""")
+         student_name = cur.fetchall()
+         temp = ""
+         for i in student_name:
+            temp = str(temp) + re.sub(r"[\'()]", '', str(i)) + "\n" 
+         self.Course_Label = tk.Label(self, text = str(temp), font=('Times',12),  bg="white", fg="black", bd=0)
+         self.Course_Label.place(x=535, y=30)
 
 class LinkCourse(tk.Frame):
      def __init__(self, master):

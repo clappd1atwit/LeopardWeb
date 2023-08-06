@@ -19,6 +19,7 @@ cur.execute("""CREATE TABLE if not exists Course(
 
 #Needs to be run first time to setup db
 #cur.execute("""ALTER TABLE STUDENT ADD COLUMN courseCRN""")
+#cur.execute("""ALTER TABLE INSTRUCTOR DROP COLUMN courseCRN""")
 #cur.execute("""ALTER TABLE INSTRUCTOR ADD COLUMN courseCRN""")
 # cur.execute("INSERT INTO Course VALUES(34285, 'Advanced Digital', 'BSCO', '12:30', 'MF', 'Summer', 2023, 4, 'Pilin');")
 # cur.execute("INSERT INTO Course VALUES(33950, 'Applied Programming', 'BSCO', '8:00', 'MTR', 'Summer', 2023, 3, 'Rawlins');")
