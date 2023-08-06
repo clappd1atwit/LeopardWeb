@@ -1,3 +1,4 @@
+from ctypes.wintypes import SIZE
 from tkinter import *
 from winreg import QueryReflectionKey
 from Sandbox import *
@@ -532,7 +533,7 @@ class AddDrop(tk.Frame):
                 query_result = query_result[6:]
                 query_result = query_result[:-3]
             else:
-                query_result = query_result[3:]
+                query_result = query_result[2:]
                 query_result = query_result[:-3]
         self.CRN_label = tk.Label(self, text="CRN: " + query_result, font=('Times',12), bg="white")
         self.CRN_label.place(x=15, y=250)
@@ -591,12 +592,32 @@ class DispRoster(tk.Frame):
         self.Back_button.place(x=535, y=30)
         self.RSTR_title = tk.Label(self, text='Roster:', font=('Times',18), bg="white")
         self.RSTR_title.place(x=50, y=90)
+        temp = ""
         cur.execute("""SELECT CRN FROM Course WHERE professor = '%s'""" % Lastname)
-        query_CRN = cur.fetchone()
-        string_CRN = str(query_CRN[0])
-        cur.execute("""SELECT NAME, SURNAME FROM STUDENT WHERE courseCRN = '%s'""" % string_CRN)
-        query_result = cur.fetchall()
-        self.RSTR_label = tk.Label(self, text=re.sub(r"[\'()]", '', str(query_result)), font=('Times',12), bg="white")
+        query_CRN = cur.fetchall()
+        cur.execute("""SELECT Title FROM Course WHERE professor = '%s'""" % Lastname)
+        query_name = cur.fetchall()
+        for h in range(len(query_name)):
+            temp = temp + str(query_name[h]) + "\n"
+            for j in query_CRN:
+                j = str(j)
+                j = j[1:]
+                j = j[:-2]
+                j = int(j)
+                cur.execute("SELECT courseCRN FROM STUDENT""")
+                query_result = cur.fetchall()
+                for i in range(len(query_result)):
+                    i = query_result[i]
+                    query_str = str(i)
+                    query_str = query_str[2:]
+                    query_str = query_str[:-3]
+                    numbers = [int(num) for num in query_str.split(',')]
+                    for num in numbers:
+                        if num == j:
+                          cur.execute("SELECT NAME, SURNAME FROM STUDENT WHERE courseCRN = '%s'""" % i)
+                          query_stud = cur.fetchone()
+                          temp = str(temp) + re.sub(r"[\'()]", '', str(query_stud)) + "\n" 
+        self.RSTR_label = tk.Label(self, text=re.sub(r"[\'()]", '', temp), font=('Times',12), bg="white")
         self.RSTR_label.place(x=50, y=130)
 
     def Back(self):
