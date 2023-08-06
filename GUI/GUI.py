@@ -250,24 +250,24 @@ class LoginFrame(tk.Frame):
     
 class AdminPage(tk.Frame):
     def __init__(self, master):
-        super().__init__(master, width = 350, height = 500, bg="white")
+        super().__init__(master, width = 600, height = 500, bg="white")
         self.label = tk.Label(self, text="Welcome Admin", width=32, font=('Times',14), bg="white")
-        self.label.place(x=20, y=40)
+        self.label.place(x=140, y=40)
 
         self.logout_button = tk.Button(self, text="Logout", font=('Times',12),  bg="red", fg="white", bd=0, command=self.logout)
-        self.logout_button.place(x=285, y=10)
+        self.logout_button.place(x=535, y=10)
         
-        self.Course_button = tk.Button(self, text="Edit Semester Catalog", bg="black", fg="white", width=25, font=('Times',12), bd=0, command=self.Courses)
-        self.Course_button.place(x=70, y=120)
+        self.Course_button = tk.Button(self, text="Edit Semester Catalog", bg="white", fg="black", width=25, font=('Times',12), bd=0, command=self.Courses)
+        self.Course_button.place(x=190, y=120)
         
-        self.EditRoster_button = tk.Button(self, text="Edit Instructor Roster", bg="black", fg="white", width=25, font=('Times',12), bd=0, command=self.InstuctorRoster)
-        self.EditRoster_button.place(x=70, y=160)
+        self.EditRoster_button = tk.Button(self, text="Edit Instructor Roster", bg="white", fg="black", width=25, font=('Times',12), bd=0, command=self.InstuctorRoster)
+        self.EditRoster_button.place(x=190, y=160)
 
-        self.EditRoster_button = tk.Button(self, text="Edit Student Roster", bg="black", fg="white", width=25, font=('Times',12), bd=0, command=self.StudentRoster)
-        self.EditRoster_button.place(x=70, y=200)
+        self.EditRoster_button = tk.Button(self, text="Edit Student Roster", bg="white", fg="black", width=25, font=('Times',12), bd=0, command=self.StudentRoster)
+        self.EditRoster_button.place(x=190, y=200)
 
-        self.LnkCourse_button = tk.Button(self, text="Link Course", bg="black", fg="white", width=25, font=('Times',12), bd=0, command=self.LinkCourse)
-        self.LnkCourse_button.place(x=70, y=240)
+        self.LnkCourse_button = tk.Button(self, text="Link Course", bg="white", fg="black", width=25, font=('Times',12), bd=0, command=self.LinkCourse)
+        self.LnkCourse_button.place(x=190, y=240)
     
     def Courses(self):
         self.master.show_EditCourseCatalog()
