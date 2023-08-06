@@ -215,7 +215,7 @@ class LoginFrame(tk.Frame):
         global Type
         username = self.username_entry.get() 
         password = self.password_entry.get()
-        
+        login_count = ""
         DbConnect = sqlite3.connect("assignment3.db")
         db = DbConnect.cursor()
 
@@ -470,24 +470,30 @@ class DispSchedule(tk.Frame):
     def __init__(self, master):
         super().__init__(master, width = 600, height = 500, bg="white")
         
-        #self.Course_Label = tk.Label(self, text = 'Schedule:', font=('Times', 18),  bg="white", fg="black", bd=0)
-        #self.Course_Label.place(x=30, y=90)
-        
-        #cur.execute("""SELECT courseCRN FROM 'STUDENT' WHERE ID = 10001""")
-        #query_result = cur.fetchone()
-        #self.Back_button = tk.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
-        #self.Back_button.place(x=535, y=30)
-        #if Type == 'Instructor':
-        #    cur.execute("""SELECT courseCRN FROM 'INSTRUCTOR' WHERE SURNAME = '%s'""" % Lastname)
-        #    query_result = cur.fetchone()
-        #elif Type == 'STUDENT':
-        #    cur.execute("""SELECT courseCRN FROM 'STUDENT' WHERE SURNAME = '%s'""" % Lastname)
-        #    query_result = cur.fetchone()
-        #query_int = int(query_result[0])
-        #cur.execute("""SELECT * FROM Course WHERE CRN = '%d'""" % int(query_int))
-        #query_result = cur.fetchall()
-        #self.SCH_label = tk.Label(self, text=re.sub(r"[\'()]", '', str(query_result)), font=('Times',12), bg="white")
-        #self.SCH_label.place(x=30, y=130)
+        self.Course_Label = tk.Label(self, text = 'Schedule:', font=('Times', 18),  bg="white", fg="black", bd=0)
+        self.Course_Label.place(x=30, y=90)
+        temp = ""
+        cur.execute("""SELECT courseCRN FROM 'STUDENT' WHERE ID = 10001""")
+        query_result = cur.fetchone()
+        self.Back_button = tk.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
+        self.Back_button.place(x=535, y=30)
+        if Type == 'Instructor':
+            cur.execute("""SELECT * FROM 'Course' WHERE professor = '%s'""" % Lastname)
+            query_result = cur.fetchall()
+            for i in query_result:
+                temp = str(temp) + re.sub(r"[\'()]", '', str(i)) + "\n" 
+        elif Type == 'STUDENT':
+            cur.execute("""SELECT courseCRN FROM 'STUDENT' WHERE SURNAME = '%s'""" % Lastname)
+            query_result = cur.fetchone()
+            query_str = str(query_result[0])
+            query_str = query_str[1:]
+            numbers = [int(num) for num in query_str.split(',')]
+            for num in numbers:
+                cur.execute("SELECT * FROM Course WHERE CRN = ?", (num,))
+                result = cur.fetchall()
+                temp = str(temp) + re.sub(r"[\'()]", '', str(result)) + "\n" 
+        self.SCH_label = tk.Label(self, text=re.sub(r"[\'()]", '', temp), font=('Times',12), bg="white")
+        self.SCH_label.place(x=30, y=130)
 
 
     def Back(self):
@@ -523,10 +529,10 @@ class AddDrop(tk.Frame):
         else:  
             query_result = str(query_result)
             if query_result[2] == "0":
-                query_result = query_result[5:]
+                query_result = query_result[6:]
                 query_result = query_result[:-3]
             else:
-                query_result = query_result[2:]
+                query_result = query_result[3:]
                 query_result = query_result[:-3]
         self.CRN_label = tk.Label(self, text="CRN: " + query_result, font=('Times',12), bg="white")
         self.CRN_label.place(x=15, y=250)
