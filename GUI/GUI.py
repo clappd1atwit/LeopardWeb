@@ -470,24 +470,24 @@ class DispSchedule(tk.Frame):
     def __init__(self, master):
         super().__init__(master, width = 600, height = 500, bg="white")
         
-        self.Course_Label = tk.Label(self, text = 'Schedule:', font=('Times', 18),  bg="white", fg="black", bd=0)
-        self.Course_Label.place(x=30, y=90)
+        #self.Course_Label = tk.Label(self, text = 'Schedule:', font=('Times', 18),  bg="white", fg="black", bd=0)
+        #self.Course_Label.place(x=30, y=90)
         
-        cur.execute("""SELECT courseCRN FROM 'STUDENT' WHERE ID = 10001""")
-        query_result = cur.fetchone()
-        self.Back_button = tk.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
-        self.Back_button.place(x=535, y=30)
-        if Type == 'Instructor':
-            cur.execute("""SELECT courseCRN FROM 'INSTRUCTOR' WHERE SURNAME = '%s'""" % Lastname)
-            query_result = cur.fetchone()
-        elif Type == 'STUDENT':
-            cur.execute("""SELECT courseCRN FROM 'STUDENT' WHERE SURNAME = '%s'""" % Lastname)
-            query_result = cur.fetchone()
-        query_int = int(query_result[0])
-        cur.execute("""SELECT * FROM Course WHERE CRN = '%d'""" % int(query_int))
-        query_result = cur.fetchall()
-        self.SCH_label = tk.Label(self, text=re.sub(r"[\'()]", '', str(query_result)), font=('Times',12), bg="white")
-        self.SCH_label.place(x=30, y=130)
+        #cur.execute("""SELECT courseCRN FROM 'STUDENT' WHERE ID = 10001""")
+        #query_result = cur.fetchone()
+        #self.Back_button = tk.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
+        #self.Back_button.place(x=535, y=30)
+        #if Type == 'Instructor':
+        #    cur.execute("""SELECT courseCRN FROM 'INSTRUCTOR' WHERE SURNAME = '%s'""" % Lastname)
+        #    query_result = cur.fetchone()
+        #elif Type == 'STUDENT':
+        #    cur.execute("""SELECT courseCRN FROM 'STUDENT' WHERE SURNAME = '%s'""" % Lastname)
+        #    query_result = cur.fetchone()
+        #query_int = int(query_result[0])
+        #cur.execute("""SELECT * FROM Course WHERE CRN = '%d'""" % int(query_int))
+        #query_result = cur.fetchall()
+        #self.SCH_label = tk.Label(self, text=re.sub(r"[\'()]", '', str(query_result)), font=('Times',12), bg="white")
+        #self.SCH_label.place(x=30, y=130)
 
 
     def Back(self):
@@ -542,11 +542,11 @@ class AddDrop(tk.Frame):
             exit
         else: 
             query_str = query_str.replace(str(self.CRN_Entry.get()),"")
-            query_str = re.sub(', ,', ', ', query_str) #No work??
-
-            #This no work too
+            query_str = re.sub(', ,', ', ', query_str) 
+            
             if query_str.endswith(', '):
                 query_str = query_str[:-2]
+            if query_str.endswith(','): query_str = query_str[:-1]
             cur.execute("""UPDATE STUDENT SET courseCRN = '%s' WHERE SURNAME = '%s'""" % (query_str, Lastname))
 
 class DispRoster(tk.Frame):
@@ -892,12 +892,12 @@ class LinkStudCourse(tk.Frame):
         self.CRN_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
         self.CRN_Entry.place(x=150, y=140)
 
-        self.Name_label = tk.Label(self, text="Student:", font=('Times',12), bg="white")
+        self.Name_label = tk.Label(self, text="Student ID:", font=('Times',12), bg="white")
         self.Name_label.place(x=50, y=170)
         self.Name_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
         self.Name_Entry.place(x=150, y=170)
 
-        self.Change_button = tk.Button(self, text="Commit Change", font=('Times',12),  bg="black", fg="white", bd=0, command=self.ChangeProf)
+        self.Change_button = tk.Button(self, text="Commit Change", font=('Times',12),  bg="black", fg="white", bd=0, command=self.AddStud)
         self.Change_button.place(x=50, y=210)
 
         self.Cls_label = tk.Label(self, text="Remove Student From Course:", font=('Times',18), bg="white")
@@ -908,21 +908,42 @@ class LinkStudCourse(tk.Frame):
         self.rmCRN_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
         self.rmCRN_Entry.place(x=150, y=280)
 
-        self.Name_label = tk.Label(self, text="Student:", font=('Times',12), bg="white")
-        self.Name_label.place(x=50, y=310)
-        self.Name_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
-        self.Name_Entry.place(x=150, y=310)
+        self.rmName_label = tk.Label(self, text="ID:", font=('Times',12), bg="white")
+        self.rmName_label.place(x=50, y=310)
+        self.rmName_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
+        self.rmName_Entry.place(x=150, y=310)
 
-        self.Change_button = tk.Button(self, text="Commit Change", font=('Times',12),  bg="black", fg="white", bd=0, command=self.ChangeProf)
+        self.Change_button = tk.Button(self, text="Commit Change", font=('Times',12),  bg="black", fg="white", bd=0, command=self.RemoveStud)
         self.Change_button.place(x=50, y=350)
 
-     def ChangeProf(self):
+     def AddStud(self):
          iCRN = int(self.CRN_Entry.get())
-         ProfName = self.Name_Entry.get()
-         cur.execute("""UPDATE Course SET professor = '%s' WHERE CRN = '%d'""" % (iCRN, ProfName))
-     def RemoveProf(self):
+         StudID = int(self.Name_Entry.get())
+         cur.execute("""SELECT courseCRN FROM 'STUDENT' WHERE ID = '%s'""" % StudID)
+         query_result = cur.fetchone()
+         if query_result == "0":
+            query_result = str(self.CRN_Entry.get())
+         else: query_result = str(query_result[0]) + ", " + str(iCRN)
+         cur.execute("""UPDATE STUDENT SET courseCRN = '%s' WHERE ID = '%d'""" % (query_result, StudID))
+
+     def RemoveStud(self):
          iCRN = int(self.rmCRN_Entry.get())
-         cur.execute("""UPDATE Course SET professor = NULL WHERE CRN = '%d'""" % iCRN)
+         StudID = int(self.rmName_Entry.get())
+         cur.execute("""SELECT courseCRN FROM 'STUDENT' WHERE ID = '%d'""" % StudID)
+         query_result = cur.fetchone()
+         query_str = str(query_result[0])
+         if query_result == "0":
+                exit
+         else: 
+            query_str = query_str.replace(str(iCRN),"")
+            query_str = re.sub(', ,', ', ', query_str) 
+            
+            if query_str.endswith(', '):
+                query_str = query_str[:-2]
+            if query_str.endswith(','): query_str = query_str[:-1]
+            cur.execute("""UPDATE STUDENT SET courseCRN = '%s' WHERE ID = '%d'""" % (query_str, iCRN))
+         
+
      def Back(self):
         self.master.show_Admin_frame()
 
