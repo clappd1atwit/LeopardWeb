@@ -510,35 +510,58 @@ class AddDrop(tk.Frame):
         self.Remove_button = tk.Button(self, text="Remove Class", font=('Times',12),  bg="red", fg="white", bd=0, command=self.DelClass)
         self.Remove_button.place(x=130, y=80)
 
-        self.CRN_label = tk.Label(self, text="CRN:", font=('Times',12), bg="white")
-        self.CRN_label.place(x=15, y=130)
+        self.CRNs_label = tk.Label(self, text="CRN:", font=('Times',12), bg="white")
+        self.CRNs_label.place(x=15, y=130)
 
         self.CRN_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
         self.CRN_Entry.place(x=75, y=130)
 
         cur.execute("""SELECT courseCRN FROM 'STUDENT' WHERE SURNAME = '%s'""" % Lastname)
         query_result = cur.fetchone()
-
-        self.CRN_label = tk.Label(self, text=f"CRN: " + re.sub(r"[\'()]", '', str(query_result)), font=('Times',12), bg="white")
+        if str(query_result) == "(None,)" or str(query_result) == "('0',)" or str(query_result) == "('',)" or str(query_result) == "None":
+            query_result = str(" ")
+        else:  
+            query_result = str(query_result)
+            if query_result[2] == "0":
+                query_result = query_result[5:]
+                query_result = query_result[:-3]
+            else:
+                query_result = query_result[2:]
+                query_result = query_result[:-3]
+        self.CRN_label = tk.Label(self, text="CRN: " + query_result, font=('Times',12), bg="white")
         self.CRN_label.place(x=15, y=250)
         
     def Back(self):
         self.master.show_student_frame()
 
     def AddClass(self):
+        self.CRN_label.place_forget()
         cur.execute("""SELECT courseCRN FROM 'STUDENT' WHERE SURNAME = '%s'""" % Lastname)
         query_result = cur.fetchone()
-        if query_result == "0":
+        if str(query_result) == "(None,)" or query_result == "0" or query_result == NULL or str(query_result) == "None,":
             query_result = str(self.CRN_Entry.get())
-        else: query_result = str(query_result[0]) + ", " + str(self.CRN_Entry.get())
-        print(query_result)
-        cur.execute("""UPDATE STUDENT SET courseCRN = '%s' WHERE SURNAME = '%s'""" % (query_result, Lastname))
+            cur.execute("""UPDATE STUDENT SET courseCRN = '%s' WHERE SURNAME = '%s'""" % (query_result, Lastname))
+        else: 
+            query_result = str(query_result)
+            if query_result[2] == "0":
+                query_result = query_result[5:]
+                query_result = query_result[:-3]
+            else:
+                query_result = query_result[2:]
+                query_result = query_result[:-3]
+            query_result = str(query_result) + ", " + str(self.CRN_Entry.get())
+            cur.execute("""UPDATE STUDENT SET courseCRN = '%s' WHERE SURNAME = '%s'""" % (query_result, Lastname))
+        
+        self.CRN_label = tk.Label(self, text="CRN: " + query_result, font=('Times',12), bg="white")
+        self.CRN_label.place(x=15, y=250)
+
 
     def DelClass(self):
+        self.CRN_label.place_forget()
         cur.execute("""SELECT courseCRN FROM 'STUDENT' WHERE SURNAME = '%s'""" % Lastname)
         query_result = cur.fetchone()
         query_str = str(query_result[0])
-        if query_result == "0":
+        if query_result == "None" or query_result == "0":
             exit
         else: 
             query_str = query_str.replace(str(self.CRN_Entry.get()),"")
@@ -547,7 +570,13 @@ class AddDrop(tk.Frame):
             if query_str.endswith(', '):
                 query_str = query_str[:-2]
             if query_str.endswith(','): query_str = query_str[:-1]
-            cur.execute("""UPDATE STUDENT SET courseCRN = '%s' WHERE SURNAME = '%s'""" % (query_str, Lastname))
+            
+            if str(query_str) == "(None,)" or str(query_str) == "('0',)" or str(query_str) == "('',)" or str(query_str) == "None":
+                cur.execute("""UPDATE STUDENT SET courseCRN = '%s' WHERE SURNAME = '%s'""" % ("0", Lastname))
+            else:
+                cur.execute("""UPDATE STUDENT SET courseCRN = '%s' WHERE SURNAME = '%s'""" % (query_str, Lastname))
+            self.CRN_label = tk.Label(self, text="CRN: " + query_str, font=('Times',12), bg="white")
+            self.CRN_label.place(x=15, y=250)
 
 class DispRoster(tk.Frame):
     def __init__(self, master):
@@ -721,14 +750,14 @@ class EditStudentRoster(tk.Frame):
      def AddStudent(self):
          self.Course_Label.place_forget()
          intID = int(self.ID_Entry.get())
-         cur.execute("""INSERT INTO STUDENT VALUES('%d','%s', '%s', '%d', '%s', '%s', '%s')""" % (intID, self.Name_Entry.get(), self.Surname_Entry.get(), int(self.Year_Entry.get()), self.Major_Entry.get(), self.Email_Entry.get(), NULL))
+         cur.execute("""INSERT INTO STUDENT VALUES('%d','%s', '%s', '%d', '%s', '%s', '%s')""" % (intID, self.Name_Entry.get(), self.Surname_Entry.get(), int(self.Year_Entry.get()), self.Major_Entry.get(), self.Email_Entry.get(), "0"))
          cur.execute("""SELECT ID, NAME, SURNAME FROM STUDENT""")
          student_name = cur.fetchall()
          temp = ""
          for i in student_name:
             temp = str(temp) + re.sub(r"[\'()]", '', str(i)) + "\n" 
          self.Course_Label = tk.Label(self, text = str(temp), font=('Times',12),  bg="white", fg="black", bd=0)
-         self.Course_Label.place(x=535, y=30)
+         self.Course_Label.place(x=390, y=70)
      
      def RemoveStudent(self):
          self.Course_Label.place_forget()
@@ -740,7 +769,7 @@ class EditStudentRoster(tk.Frame):
          for i in student_name:
             temp = str(temp) + re.sub(r"[\'()]", '', str(i)) + "\n" 
          self.Course_Label = tk.Label(self, text = str(temp), font=('Times',12),  bg="white", fg="black", bd=0)
-         self.Course_Label.place(x=535, y=30)
+         self.Course_Label.place(x=390, y=70)
 
 class EditInstructorRoster(tk.Frame):
      def __init__(self, master):

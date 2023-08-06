@@ -18,7 +18,7 @@ cur.execute("""CREATE TABLE if not exists Course(
 );""")#Created Course table if not already made
 
 #Needs to be run first time to setup db
-cur.execute("""UPDATE Course SET CRN = '%d' WHERE CRN = '%d'""" % (13648, 3648))
+#cur.execute("""UPDATE Course SET CRN = '%d' WHERE CRN = '%d'""" % (13648, 3648))
 #cur.execute("""ALTER TABLE STUDENT ADD COLUMN courseCRN""")
 #cur.execute("""ALTER TABLE INSTRUCTOR DROP COLUMN courseCRN""")
 #cur.execute("""ALTER TABLE INSTRUCTOR ADD COLUMN courseCRN""")
@@ -69,7 +69,7 @@ class student (User):
         cur.execute("""UPDATE STUDENT SET courseCRN = '%d' WHERE SURNAME = '%s'""" % (aCRN, self.Lastname))
 
     def removecourse(self, rCRN): #remove courses
-        cur.execute("""UPDATE STUDENT SET courseCRN = NULL WHERE courseCRN = '%d' AND SURNAME = '%s'""" % (int(rCRN), self.Lastname))
+        cur.execute("""UPDATE STUDENT SET courseCRN = "0" WHERE SURNAME = '%s'""" % (self.Lastname))
 
     def getschedule(self):
         cur.execute("""SELECT courseCRN FROM STUDENT WHERE SURNAME = '%s'""" % self.Lastname)
