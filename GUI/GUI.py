@@ -737,7 +737,7 @@ class EditInstructorRoster(tk.Frame):
         for i in student_name:
             temp = str(temp) + re.sub(r"[\'()]", '', str(i)) + "\n" 
         self.Course_Label = tk.Label(self, text = str(temp), font=('Times',12),  bg="white", fg="black", bd=0)
-        self.Course_Label.place(x=390, y=70)
+        self.Course_Label.place(x=380, y=70)
 
         self.STD_label = tk.Label(self, text="Add a Instructor:", font=('Times',16), bg="white")
         self.STD_label.place(x=30, y=40)
@@ -816,7 +816,7 @@ class EditInstructorRoster(tk.Frame):
          for i in student_name:
             temp = str(temp) + re.sub(r"[\'()]", '', str(i)) + "\n" 
          self.Course_Label = tk.Label(self, text = str(temp), font=('Times',12),  bg="white", fg="black", bd=0)
-         self.Course_Label.place(x=390, y=70)
+         self.Course_Label.place(x=380, y=70)
 
 class LinkCourse(tk.Frame):
      def __init__(self, master):
