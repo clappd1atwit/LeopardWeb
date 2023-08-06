@@ -270,7 +270,7 @@ class AdminPage(tk.Frame):
         self.LnkCourse_button.place(x=190, y=240)
 
         self.getRoster_btn = tk.Button(self, text="Course Search", font=('Times',12),  bg="white", fg="black", bd=0, command=self.printCourses)
-        self.getRoster_btn.place(x=190, y=280)
+        self.getRoster_btn.place(x=255, y=280)
     
     def Courses(self):
         self.master.show_EditCourseCatalog()
