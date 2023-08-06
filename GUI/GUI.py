@@ -556,57 +556,65 @@ class EditCourseCat(tk.Frame):
         self.Back_button = tk.Button(self, text="Back", font=('Times',12),  bg="red", fg="white", bd=0, command=self.Back)
         self.Back_button.place(x=535, y=30)
 
+<<<<<<< HEAD
+        self.Cls_label = tk.Label(self, text="Add a Class:", font=('Times',16), bg="white")
+        self.Cls_label.place(x=50, y=40)
+=======
         self.Cls_label = tk.Label(self, text="Add a Class", font=('Times',12), bg="white")
         self.Cls_label.place(x=50, y=90)
+>>>>>>> e79ab4835dfe51730a9df5fa8512422e42354329
 
         self.CRN_label = tk.Label(self, text="CRN:", font=('Times',12), bg="white")
-        self.CRN_label.place(x=50, y=120)
+        self.CRN_label.place(x=50, y=70)
         self.CRN_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
-        self.CRN_Entry.place(x=150, y=120)
+        self.CRN_Entry.place(x=150, y=70)
 
         self.Name_label = tk.Label(self, text="Name:", font=('Times',12), bg="white")
-        self.Name_label.place(x=50, y=150)
+        self.Name_label.place(x=50, y=100)
         self.Name_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
-        self.Name_Entry.place(x=150, y=150)
+        self.Name_Entry.place(x=150, y=100)
 
         self.Dept_label = tk.Label(self, text="Department:", font=('Times',12), bg="white")
-        self.Dept_label.place(x=50, y=180)
+        self.Dept_label.place(x=50, y=130)
         self.Dept_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
-        self.Dept_Entry.place(x=150, y=180)
+        self.Dept_Entry.place(x=150, y=130)
 
         self.Time_label = tk.Label(self, text="Time:", font=('Times',12), bg="white")
-        self.Time_label.place(x=50, y=210)
+        self.Time_label.place(x=50, y=160)
         self.Time_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
-        self.Time_Entry.place(x=150, y=210)
+        self.Time_Entry.place(x=150, y=160)
 
         self.Day_label = tk.Label(self, text="Days:", font=('Times',12), bg="white")
-        self.Day_label.place(x=50, y=240)
+        self.Day_label.place(x=50, y=190)
         self.Day_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
-        self.Day_Entry.place(x=150, y=240)
+        self.Day_Entry.place(x=150, y=190)
 
         self.Semsester_label = tk.Label(self, text="Semsester:", font=('Times',12), bg="white")
-        self.Semsester_label.place(x=50, y=270)
+        self.Semsester_label.place(x=50, y=220)
         self.Semsester_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
-        self.Semsester_Entry.place(x=150, y=270)
+        self.Semsester_Entry.place(x=150, y=220)
 
         self.Year_label = tk.Label(self, text="Year:", font=('Times',12), bg="white")
-        self.Year_label.place(x=50, y=300)
+        self.Year_label.place(x=50, y=250)
         self.Year_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
-        self.Year_Entry.place(x=150, y=300)
+        self.Year_Entry.place(x=150, y=250)
 
         self.Credits_label = tk.Label(self, text="Credits:", font=('Times',12), bg="white")
-        self.Credits_label.place(x=50, y=330)
+        self.Credits_label.place(x=50, y=280)
         self.Credits_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
-        self.Credits_Entry.place(x=150, y=330)
+        self.Credits_Entry.place(x=150, y=280)
 
         self.Professor_label = tk.Label(self, text="Professor:", font=('Times',12), bg="white")
-        self.Professor_label.place(x=50, y=360)
+        self.Professor_label.place(x=50, y=310)
         self.Professor_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
-        self.Professor_Entry.place(x=150, y=360)
+        self.Professor_Entry.place(x=150, y=310)
 
         self.Add_button = tk.Button(self, text="Add Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.AddCourse)
-        self.Add_button.place(x=50, y=400)
+        self.Add_button.place(x=50, y=350)
 
+
+        self.Remove_Course_label = tk.Label(self, text="Remove Course:", font=('Times',16), bg="white")
+        self.Remove_Course_label.place(x=50, y=400)
         self.Remove_label = tk.Label(self, text="Course CRN:", font=('Times',12), bg="white")
         self.Remove_label.place(x=50, y=430)
         self.Remove_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
@@ -644,7 +652,7 @@ class EditStudentRoster(tk.Frame):
         student_name = cur.fetchall()
 
         for i in student_name:
-            temp = str(temp) + str(i) + "\n" 
+            temp = str(temp) + re.sub(r"[\'()]", '', str(i)) + "\n" 
         self.Course_Label = tk.Label(self, text = str(temp), font=('Times',12),  bg="white", fg="black", bd=0)
         self.Course_Label.place(x=15, y=220)
 
