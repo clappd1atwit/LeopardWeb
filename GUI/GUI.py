@@ -777,7 +777,7 @@ class EditInstructorRoster(tk.Frame):
         self.Email_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=24,font=('Times',14), bg="white")
         self.Email_Entry.place(x=130, y=250)
 
-        self.AddIns_button = tk.Button(self, text="Add Instructor", font=('Times',12),  bg="black", fg="white", bd=0, command=self.AddStudent)
+        self.AddIns_button = tk.Button(self, text="Add Instructor", font=('Times',12),  bg="black", fg="white", bd=0, command=self.AddInstructor)
         self.AddIns_button.place(x=30, y=280)
 
         self.Ins_label = tk.Label(self, text="Remove Instructor:", font=('Times',16), bg="white")
@@ -788,13 +788,13 @@ class EditInstructorRoster(tk.Frame):
         self.rmCRN_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=24,font=('Times',14), bg="white")
         self.rmCRN_Entry.place(x=130, y=350)
 
-        self.rmSTD_button = tk.Button(self, text="Remove Instructor", font=('Times',12),  bg="black", fg="white", bd=0, command=self.RemoveStudent)
+        self.rmSTD_button = tk.Button(self, text="Remove Instructor", font=('Times',12),  bg="black", fg="white", bd=0, command=self.RemoveInstructor)
         self.rmSTD_button.place(x=30, y=380)
 
      def Back(self):
         self.master.show_Admin_frame()
 
-     def AddStudent(self):
+     def AddInstructor(self):
          self.Course_Label.place_forget()
          intID = int(self.ID_Entry.get())
          cur.execute("""INSERT INTO INSTRUCTOR VALUES('%d','%s', '%s', '%s', '%d', '%s', '%s')""" % (intID, self.Name_Entry.get(), self.Surname_Entry.get(), self.Title_Entry.get(), int(self.Year_Entry.get()), self.Dept_Entry.get(), self.Email_Entry.get()))
@@ -804,9 +804,9 @@ class EditInstructorRoster(tk.Frame):
          for i in student_name:
             temp = str(temp) + re.sub(r"[\'()]", '', str(i)) + "\n" 
          self.Course_Label = tk.Label(self, text = str(temp), font=('Times',12),  bg="white", fg="black", bd=0)
-         self.Course_Label.place(x=535, y=30)
+         self.Course_Label.place(x=390, y=70)
      
-     def RemoveStudent(self):
+     def RemoveInstructor(self):
          self.Course_Label.place_forget()
          intID = int(self.rmCRN_Entry.get())
          cur.execute("""DELETE FROM INSTRUCTOR WHERE ID = '%d'""" % intID)
@@ -816,7 +816,7 @@ class EditInstructorRoster(tk.Frame):
          for i in student_name:
             temp = str(temp) + re.sub(r"[\'()]", '', str(i)) + "\n" 
          self.Course_Label = tk.Label(self, text = str(temp), font=('Times',12),  bg="white", fg="black", bd=0)
-         self.Course_Label.place(x=535, y=30)
+         self.Course_Label.place(x=390, y=70)
 
 class LinkCourse(tk.Frame):
      def __init__(self, master):
