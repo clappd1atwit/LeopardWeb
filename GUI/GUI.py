@@ -268,6 +268,9 @@ class AdminPage(tk.Frame):
 
         self.LnkCourse_button = tk.Button(self, text="Link Course", bg="white", fg="black", width=25, font=('Times',12), bd=0, command=self.LinkCourse)
         self.LnkCourse_button.place(x=190, y=240)
+
+        self.getRoster_btn = tk.Button(self, text="Course Search", font=('Times',12),  bg="white", fg="black", bd=0, command=self.printCourses)
+        self.getRoster_btn.place(x=190, y=280)
     
     def Courses(self):
         self.master.show_EditCourseCatalog()
@@ -280,6 +283,9 @@ class AdminPage(tk.Frame):
 
     def LinkCourse(self):
         self.master.show_LinkCoursePage()
+
+    def printCourses(self):
+        self.master.show_CourseList()
 
     def logout(self):
         self.master.show_login_frame()
@@ -540,7 +546,7 @@ class EditCourseCat(tk.Frame):
         self.Back_button.place(x=535, y=30)
 
         self.Cls_label = tk.Label(self, text="Add a Class", font=('Times',12), bg="white")
-        self.Cls_label.place(x=50, y=100)
+        self.Cls_label.place(x=50, y=90)
 
         self.CRN_label = tk.Label(self, text="CRN:", font=('Times',12), bg="white")
         self.CRN_label.place(x=50, y=120)
@@ -594,9 +600,6 @@ class EditCourseCat(tk.Frame):
         self.Remove_label.place(x=50, y=430)
         self.Remove_Entry = tk.Entry(self, highlightbackground='black', highlightthickness=1,bd=0,width=34,font=('Times',14), bg="white")
         self.Remove_Entry.place(x=150, y=430)
-
-        self.Add_button = tk.Button(self, text="Add Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.AddCourse)
-        self.Add_button.place(x=50, y=400)
 
         self.Remove_button = tk.Button(self, text="Remove Course", font=('Times',12),  bg="black", fg="white", bd=0, command=self.RemoveCourse)
         self.Remove_button.place(x=50, y=460)
