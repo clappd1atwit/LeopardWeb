@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Assignment5",
+    "\\GUI"
   ],
-  "SelectedNode": "\\C:\\Users\\oehmena\\source\\repos\\APC_LeopardWeb",
+  "SelectedNode": "\\GUI\\GUI.py",
   "PreviewInSolutionExplorer": false
 }
