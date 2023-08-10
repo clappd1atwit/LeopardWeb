@@ -253,9 +253,9 @@ class LoginFrame(tk.Frame):
                             creating_user(username, login_count)
                             successful_login = 1
                         else:
-                            messagebox.showerror("Invalid user!")
-        else:
-            messagebox.showerror("Login Failed", "Invalid username or password.")      
+                            messagebox.showerror("Login Failed", "Invalid username or password.")  
+                            successful_login == 1
+                            break
         Type = login_count
         # Perform login validation here (e.g., check against a database)
         # For simplicity, we'll use a dummy check
